@@ -8,35 +8,35 @@ const securityMeasures = [
     description:
       "All user data is encrypted in transit (TLS/HTTPS) and at rest using AES-256 standards to ensure maximum protection.",
     icon: Lock,
-    image: "https://images.unsplash.com/photo-1605902711622-8a0b65e3f1da?auto=format&fit=crop&w=600&q=80",
+    image: "https://media.istockphoto.com/id/2163352281/photo/securing-cybersecurity-a-businesswoman-protecting-personal-data-preventing-online-theft.jpg?s=612x612&w=0&k=20&c=l4xijI0LAb4avRfJ1-DUUClQe1gDKpBJW5GnIktCfTo=",
   },
   {
     title: "Data Storage & Backup",
     description:
       "Data is stored in secure servers with regular backups. Redundant systems ensure high availability and data integrity.",
     icon: Database,
-    image: "https://images.unsplash.com/photo-1581090700227-0a1b59f69edc?auto=format&fit=crop&w=600&q=80",
+    image: "https://media.istockphoto.com/id/2171255840/photo/backup-storage-data-internet-technology-business-concept.jpg?s=612x612&w=0&k=20&c=9mxidn15HLkmzBgB3HhYL8ltR4EGLatdmuGq6Vf3qwA=",
   },
   {
     title: "Access Control",
     description:
       "Strict access control is enforced internally. Multi-factor authentication (MFA) is required for all administrative access.",
     icon: Key,
-    image: "https://images.unsplash.com/photo-1605902711622-3fbb9e4bca92?auto=format&fit=crop&w=600&q=80",
+    image: "https://media.istockphoto.com/id/2174920422/photo/cyber-security-concepts-secure-encryption-protection-of-personal-data-access-network-security.jpg?s=612x612&w=0&k=20&c=6TU4poVxYsrbRFLJuF5iICsjWbXTSc1HP_NlVG9WWlo=",
   },
   {
     title: "Threat Monitoring",
     description:
       "Continuous monitoring for unusual activity and potential threats. Rapid response procedures are in place to mitigate risks.",
     icon: Shield,
-    image: "https://images.unsplash.com/photo-1605902711622-6c57b5b81d1c?auto=format&fit=crop&w=600&q=80",
+    image: "https://media.istockphoto.com/id/2180695620/photo/scam-alert-warning-with-cybersecurity-icons-a-person-using-laptop-warning-sign-for-scams-with.jpg?s=612x612&w=0&k=20&c=lLVjY7lE5HLCFy3lMWJeX4BeDbCVPC-jsNYXMmop4C4=",
   },
   {
     title: "Incident Handling",
     description:
       "If a security incident occurs, we immediately assess, contain, and resolve the issue. Users are notified promptly with recommended actions.",
     icon: AlertCircle,
-    image: "https://images.unsplash.com/photo-1581092334129-3d8c2d54d7c1?auto=format&fit=crop&w=600&q=80",
+    image: "https://media.istockphoto.com/id/2197578986/photo/risk-management-alert-ai-driven-system-for-detecting-critical-warnings-caution-notifications.jpg?s=612x612&w=0&k=20&c=zc_GNF28jEsrPOw_VxJvS38wGIeMy9mClpU-FasWbTM=",
   },
 ];
 
@@ -63,7 +63,7 @@ export default function SecurityPage() {
           We prioritize the security and privacy of our users. Learn about the measures we take to protect your data and maintain system integrity.
         </motion.p>
         <motion.img
-          src="https://images.unsplash.com/photo-1581092334129-3d8c2d54d7c1?auto=format&fit=crop&w=800&q=80"
+          src="https://media.istockphoto.com/id/2203259620/photo/cloud-based-file-storage-with-advanced-security-encrypted-data-protection-and-ai-backup.jpg?s=612x612&w=0&k=20&c=DnK-LKq7OyzMn-Hapk0E79vHqRK5jeJGpbnB3hNXn0Q="
           alt="Security Illustration"
           className="mt-8 mx-auto rounded-xl shadow-lg w-96 opacity-80"
           initial={{ y: 20, opacity: 0 }}
@@ -147,7 +147,7 @@ export default function SecurityPage() {
           Contact our support team immediately if you notice any suspicious activity or potential security threats.
         </p>
         <img
-          src="https://images.unsplash.com/photo-1591696331119-634f5c9f25b8?auto=format&fit=crop&w=600&q=80"
+          src="https://media.istockphoto.com/id/2156387160/photo/hispanic-latin-american-couple-software-engineer-developer-use-computer-work-on-program.jpg?s=612x612&w=0&k=20&c=4MLKAJBBRdiPbhBfIWV4-raQzm5ssvi-Pi4-G8km_dU="
           alt="User Security Tips"
           className="mt-6 mx-auto rounded-xl shadow-lg w-96"
         />

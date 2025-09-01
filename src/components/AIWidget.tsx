@@ -620,7 +620,7 @@ const handleSendMessage = async (messageText?: string) => {
                         className="flex items-center space-x-2 bg-gray-900 hover:bg-gray-800 text-white px-6 py-2 rounded-lg"
                       >
                         <img
-                          src="https://pixabay.com/get/ge2807b6d37cff04e126e28a4a6a86877f4bc151540c6740599fe2678bb8706a351e478bd7494f8fbcfbf871e61912446661a80d91973fc5abdb57983bb974530_1280.jpg"
+                          src="https://media.istockphoto.com/id/1299077582/photo/positivity-puts-you-in-a-position-of-power.jpg?s=612x612&w=0&k=20&c=baDuyrwRTscUZzyAqV44hnCq7d6tXUqwf26lJTcAE0A="
                           alt="Emma"
                           className="w-6 h-6 rounded-full object-cover"
                         />
@@ -738,13 +738,11 @@ const handleSendMessage = async (messageText?: string) => {
             >
               <div className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center">
-                      <span className="text-white font-bold text-sm">
-                        scandiweb
-                      </span>
-                    </div>
-                  </div>
+                  <img
+                  src="/images/logo.png"
+                  alt="Emma"
+                  className="w-8 h-8 rounded-full object-cover flex-shrink-0"
+                />
                   <Button
                     variant="ghost"
                     size="sm"
@@ -756,7 +754,7 @@ const handleSendMessage = async (messageText?: string) => {
 
                 <div className="mb-6">
                   <h2 className="text-lg font-semibold text-gray-900 mb-1">
-                    Scandiweb Development
+                    EmmaTech Development
                   </h2>
                   <h3 className="text-xl font-bold text-gray-900 mb-2">
                     Intro Meeting with scandiweb's BD team
@@ -850,7 +848,7 @@ const handleSendMessage = async (messageText?: string) => {
               <div className="flex items-center justify-between p-4 border-b border-border bg-gradient-to-r from-blue-50 to-indigo-50 rounded-t-xl flex-shrink-0">
                 <div className="flex items-center space-x-3">
                   <img
-                    src="https://pixabay.com/get/ge2807b6d37cff04e126e28a4a6a86877f4bc151540c6740599fe2678bb8706a351e478bd7494f8fbcfbf871e61912446661a80d91973fc5abdb57983bb974530_1280.jpg"
+                    src="https://media.istockphoto.com/id/1299077582/photo/positivity-puts-you-in-a-position-of-power.jpg?s=612x612&w=0&k=20&c=baDuyrwRTscUZzyAqV44hnCq7d6tXUqwf26lJTcAE0A="
                     alt="Emma - Business Assistant"
                     className="w-10 h-10 rounded-full object-cover"
                   />
@@ -885,7 +883,7 @@ const handleSendMessage = async (messageText?: string) => {
                   >
                     {message.from === "ai" && (
                       <img
-                        src="https://pixabay.com/get/ge2807b6d37cff04e126e28a4a6a86877f4bc151540c6740599fe2678bb8706a351e478bd7494f8fbcfbf871e61912446661a80d91973fc5abdb57983bb974530_1280.jpg"
+                        src="https://media.istockphoto.com/id/1299077582/photo/positivity-puts-you-in-a-position-of-power.jpg?s=612x612&w=0&k=20&c=baDuyrwRTscUZzyAqV44hnCq7d6tXUqwf26lJTcAE0A="
                         alt="Emma"
                         className="w-8 h-8 rounded-full object-cover flex-shrink-0"
                       />

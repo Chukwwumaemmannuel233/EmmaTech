@@ -7,79 +7,79 @@ const privacySections = [
     title: "Introduction",
     description: `We value your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard your information.`,
     icon: FileText,
-    image: "https://images.unsplash.com/photo-1581090700227-59aa3de0f3ee?auto=format&fit=crop&w=600&q=80",
+    image: "https://media.istockphoto.com/id/2132572884/photo/business-team-celebrating-successful-project-in-boardroom.jpg?s=612x612&w=0&k=20&c=IJcWUi9HDZb_n2C7his-ymbREwQojDWXeOv6kpAmi-Q=",
   },
   {
     title: "Information Collection",
     description: `We collect information you provide directly, such as your name, email, and payment details. We also collect data automatically via cookies, logs, and analytics tools.`,
     icon: Lock,
-    image: "https://images.unsplash.com/photo-1605902711622-3fbb9e4bca92?auto=format&fit=crop&w=600&q=80",
+    image: "https://media.istockphoto.com/id/1266858245/photo/anonymous-businesswoman-analyzing-statistical-business-reports-on-her-laptop-pc-at-the-office.jpg?s=612x612&w=0&k=20&c=yOtrzBrt_NrwHZr4w-UpZgRqTuLTfQPU8eOh2Pjg7pE=",
   },
   {
     title: "Use of Information",
     description: `Your data helps us provide, improve, and personalize our services. We use information for account management, customer support, product enhancements, and security purposes.`,
     icon: Shield,
-    image: "https://images.unsplash.com/photo-1605902711622-6c57b5b81d1c?auto=format&fit=crop&w=600&q=80",
+    image: "https://media.istockphoto.com/id/2215035178/photo/smile-business-and-people-on-tablet-in-office-of-planning-finance-document-and-company-growth.jpg?s=612x612&w=0&k=20&c=PucxW_awvD2_v5D30oLisEDJnjJndtwFa8hg_phE28U=",
   },
   {
     title: "Data Sharing & Security",
     description: `We do not sell your personal information. Data is shared only with trusted partners under strict confidentiality agreements. All information is encrypted in transit and at rest.`,
     icon: Lock,
-    image: "https://images.unsplash.com/photo-1591696331119-634f5c9f25b8?auto=format&fit=crop&w=600&q=80",
+    image: "https://media.istockphoto.com/id/2157716288/photo/person-managing-secure-cloud-data-transfer-an-individual-uses-laptop-to-manage-secure-data.jpg?s=612x612&w=0&k=20&c=jFY_Ea_y6Pcu55C-jjTR_QB3c4yzyu5lpiANljFHyQM=",
   },
   {
     title: "User Rights",
     description: `You have the right to access, update, or delete your personal data. You may also restrict processing or object to marketing communications at any time.`,
     icon: FileText,
-    image: "https://images.unsplash.com/photo-1581091012184-0b5d2b6b7c11?auto=format&fit=crop&w=600&q=80",
+    image: "https://media.istockphoto.com/id/2163506576/photo/ai-laws-and-regulations-concept-hand-typing-on-laptop-with-digital-icons-representing.jpg?s=612x612&w=0&k=20&c=CwgK4rD0bxGCbMmzfvetAlQ7EQlxPpAxyQ5pTvPo4nM=",
   },
   {
     title: "Cookies & Tracking",
     description: `We use cookies and analytics to improve the user experience and understand website usage. You can manage your cookie preferences in your browser settings.`,
     icon: Globe,
-    image: "https://images.unsplash.com/photo-1559028012-481c0aedd51c?auto=format&fit=crop&w=600&q=80",
+    image: "https://media.istockphoto.com/id/179282797/photo/clear-internet-history.jpg?s=612x612&w=0&k=20&c=2t9NF2ztGtuxino0xkD5pM-ZsMAajwwAuCRnxYgKwQ8=",
   },
   {
     title: "Children's Privacy",
     description: `Our services are not intended for children under 13. We do not knowingly collect data from children. If we learn that data has been collected from children, it will be deleted immediately.`,
     icon: Info,
-    image: "https://images.unsplash.com/photo-1581091012184-3d8c2d54d7c1?auto=format&fit=crop&w=600&q=80",
+    image: "https://media.istockphoto.com/id/928388556/photo/little-girl-touching-the-security-button-on-the-digital-screen.jpg?s=612x612&w=0&k=20&c=9zB3OyWX3ErWlWQOJQXbADQRcJfAO_oIMHtxeZ6sGyg=",
   },
   {
     title: "Third-Party Services",
     description: `We may use third-party services for analytics, payments, hosting, or communication. These providers follow strict privacy standards and contractual obligations.`,
     icon: Shield,
-    image: "https://images.unsplash.com/photo-1590608897129-79bc9e7e3ee1?auto=format&fit=crop&w=600&q=80",
+    image: "https://media.istockphoto.com/id/680294956/photo/data-management-platform-concept-infographic-texts-and-icons-on-abstract-arrow-dart-point-to.jpg?s=612x612&w=0&k=20&c=mWI57yFkuNhatYtdLqEqPE6OpQef6A_gjL5YtTHD7v0=",
   },
   {
     title: "Legal Basis for Processing",
     description: `We process your personal data only when we have a legal basis, such as consent, contractual necessity, legal obligation, or legitimate interest.`,
     icon: Info,
-    image: "https://images.unsplash.com/photo-1581091012184-3d8c2d54d7c1?auto=format&fit=crop&w=600&q=80",
+    image: "https://media.istockphoto.com/id/1976499410/photo/image-of-judges-hammer-scales-lady-of-justice-law-book-laptop-computer-and-contract-documents.jpg?s=612x612&w=0&k=20&c=YqqtXpzWn3f-8i_0b_q61H-0pjS_9EExDkc8c6Y9SEw=",
   },
   {
     title: "Data Retention",
     description: `We retain your personal data only for as long as necessary to provide our services, comply with legal obligations, resolve disputes, and enforce agreements.`,
     icon: Lock,
-    image: "https://images.unsplash.com/photo-1590608897129-79bc9e7e3ee1?auto=format&fit=crop&w=600&q=80",
+    image: "https://media.istockphoto.com/id/2164542763/photo/businessman-touching-backup-icon-for-data-protection-and-global-network-accessibility.jpg?s=612x612&w=0&k=20&c=Mu3urxPV2Ib_onUjbRtJvk9oSP9KnCO1xeZGpyrCNWc=",
   },
   {
     title: "International Transfers",
     description: `Some of your information may be transferred and stored in countries outside your residence. We ensure appropriate safeguards are in place to protect your data.`,
     icon: Globe,
-    image: "https://images.unsplash.com/photo-1559028012-481c0aedd51c?auto=format&fit=crop&w=600&q=80",
+    image: "https://media.istockphoto.com/id/1327882500/photo/global-communication-network.jpg?s=612x612&w=0&k=20&c=rfZTdlF_2-BWoDGtVo_2EujVq74sGHzqBIxfcnkohok=0",
   },
   {
     title: "Marketing Communications",
     description: `With your consent, we may send marketing emails. You can unsubscribe anytime by clicking the “unsubscribe” link in emails or contacting support.`,
     icon: FileText,
-    image: "https://images.unsplash.com/photo-1581090700227-59aa3de0f3ee?auto=format&fit=crop&w=600&q=80",
+    image: "https://media.istockphoto.com/id/1393812255/photo/theyre-innovators-of-business.jpg?s=612x612&w=0&k=20&c=k18btXPCNimiWq_rm07YZwNHXPWwDwY3QaHGhe_R_BA=",
   },
   {
     title: "Changes to This Policy",
     description: `We may update this Privacy Policy periodically. Review it regularly. Significant changes will be communicated via email or website notifications.`,
     icon: Lock,
-    image: "https://images.unsplash.com/photo-1590608897129-79bc9e7e3ee1?auto=format&fit=crop&w=600&q=80",
+    image: "https://media.istockphoto.com/id/1400928172/photo/low-angle-view-of-hands-of-multiracial-group-of-people-working-with-ideas-and-brainstorming.jpg?s=612x612&w=0&k=20&c=xS26BvEjVWwJYG4Q0p55YWqRsKn-vakK8rGvD5zzdaM=",
   },
 ];
 
@@ -147,7 +147,7 @@ export default function PrivacyPolicyPage() {
           We are committed to maintaining transparency and keeping your personal data safe. By using our services, you agree to the practices outlined in this Privacy Policy.
         </p>
         <img
-          src="https://images.unsplash.com/photo-1581092334129-3d8c2d54d7c1?auto=format&fit=crop&w=600&q=80"
+          src="https://media.istockphoto.com/id/2151241381/photo/digital-security-and-safety-concept-blue-glossy-shield-icon-on-abstract-circuit-board-with.jpg?s=612x612&w=0&k=20&c=tswvDPrkdt-EjGP8SverskqC0Dbp6WN2en2gqkhL144="
           alt="Privacy Illustration"
           className="mt-6 mx-auto rounded-xl shadow-lg w-96"
         />

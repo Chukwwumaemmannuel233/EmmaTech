@@ -42,21 +42,21 @@ const cookiesSections = [
     description: `Some cookies are set by third-party services like analytics and ads providers. These cookies follow their own privacy practices.`,
     icon: Globe,
     image:
-      "https://images.unsplash.com/photo-1584438784894-089d6a62b8d5?auto=format&fit=crop&w=600&q=80",
+      "https://media.istockphoto.com/id/1202363571/photo/cookies-with-a-tablet-to-clarify-cookie-banners-for-websites-with-third-party-cookies.jpg?s=612x612&w=0&k=20&c=jY5PbFb859nsTD2TiboRcUV-op_Vegkt9bCCH7_NoBI=",
   },
   {
     title: "Your Rights & Choices",
     description: `You can accept, refuse, or delete cookies at any time. We respect your privacy preferences and provide tools to help you manage them.`,
     icon: UserCheck,
     image:
-      "https://images.unsplash.com/photo-1605902711622-3fbb9e4bca92?auto=format&fit=crop&w=600&q=80",
+      "https://media.istockphoto.com/id/637939370/photo/creative-colleagues-reviewing-ideas-on-wall-in-studio-office.jpg?s=612x612&w=0&k=20&c=rxIQzDuib-Fcnw5vm5Nu4p_t3xB6gItyzsD_FkzPK6c=",
   },
   {
     title: "Policy Updates",
     description: `We may update this Cookies Policy from time to time. Any changes will be posted on this page with an updated date.`,
     icon: Info,
     image:
-      "https://images.unsplash.com/photo-1581090700227-59aa3de0f3ee?auto=format&fit=crop&w=600&q=80",
+      "https://media.istockphoto.com/id/2152142980/photo/policies-update-text-on-wooden-block.jpg?s=612x612&w=0&k=20&c=n7Grt5SZoMsymElRE841etm81M1BSc1FJnmOB5NSkXI=",
   },
 ];
 
@@ -135,7 +135,7 @@ export default function CookiesPolicyPage() {
           initial={{ scale: 0.9, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          src="https://images.unsplash.com/photo-1601597112204-06d0f55c23ab?auto=format&fit=crop&w=600&q=80"
+          src="https://media.istockphoto.com/id/1448252020/photo/cakes-for-sale.jpg?s=612x612&w=0&k=20&c=l_3eZqgj9WJied-jckkSAQdKzP1jdlIZlTVkNpRJO-M="
           alt="Cookies Illustration"
           className="mt-6 mx-auto rounded-xl shadow-lg w-96"
         />
