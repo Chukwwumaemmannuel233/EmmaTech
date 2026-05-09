@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState, useEffect, useRef } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   X,
   Send,
@@ -16,34 +16,34 @@ import {
   ChevronLeft,
   ChevronRight,
   Globe,
-} from "lucide-react"
+} from "lucide-react";
 
 // TypeScript interfaces
 interface ButtonProps {
-  children: React.ReactNode
-  className?: string
-  variant?: "default" | "ghost" | "outline"
-  size?: "default" | "sm"
-  onClick?: () => void
-  disabled?: boolean
-  [key: string]: any
+  children: React.ReactNode;
+  className?: string;
+  variant?: "default" | "ghost" | "outline";
+  size?: "default" | "sm";
+  onClick?: () => void;
+  disabled?: boolean;
+  [key: string]: any;
 }
 
 interface CardProps {
-  children: React.ReactNode
-  className?: string
-  [key: string]: any
+  children: React.ReactNode;
+  className?: string;
+  [key: string]: any;
 }
 
 interface InputProps {
-  className?: string
-  type?: string
-  value?: string
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
-  onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void
-  placeholder?: string
-  disabled?: boolean
-  [key: string]: any
+  className?: string;
+  type?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyPress?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+  disabled?: boolean;
+  [key: string]: any;
 }
 
 // Tailwind Button Component
@@ -57,18 +57,19 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const baseStyles =
-    "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+    "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50";
 
   const variants: Record<string, string> = {
     default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
     ghost: "hover:bg-accent hover:text-accent-foreground",
-    outline: "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
-  }
+    outline:
+      "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+  };
 
   const sizes: Record<string, string> = {
     default: "h-9 px-4 py-2",
     sm: "h-8 rounded-md px-3 text-xs",
-  }
+  };
 
   return (
     <button
@@ -79,15 +80,18 @@ const Button = ({
     >
       {children}
     </button>
-  )
-}
+  );
+};
 
 // Tailwind Card Component
 const Card = ({ children, className = "", ...props }: CardProps) => (
-  <div className={`rounded-xl border bg-card text-card-foreground shadow ${className}`} {...props}>
+  <div
+    className={`rounded-xl border bg-card text-card-foreground shadow ${className}`}
+    {...props}
+  >
     {children}
   </div>
-)
+);
 
 // Tailwind Input Component
 const Input = ({ className = "", type = "text", ...props }: InputProps) => (
@@ -96,20 +100,20 @@ const Input = ({ className = "", type = "text", ...props }: InputProps) => (
     className={`flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 ${className}`}
     {...props}
   />
-)
+);
 
 // Message interface
 interface Message {
-  id: string
-  from: "user" | "ai"
-  text: string
-  timestamp: Date
+  id: string;
+  from: "user" | "ai";
+  text: string;
+  timestamp: Date;
 }
 
 export default function AIWidgetOnly() {
   // Add custom styles for the widget
   useEffect(() => {
-    const style = document.createElement("style")
+    const style = document.createElement("style");
     style.textContent = `
       /* Tailwind CSS variables */
       :root {
@@ -184,62 +188,62 @@ export default function AIWidgetOnly() {
           opacity: 1;
         }
       }
-    `
+    `;
 
-    document.head.appendChild(style)
+    document.head.appendChild(style);
     return () => {
       if (document.head.contains(style)) {
-        document.head.removeChild(style)
+        document.head.removeChild(style);
       }
-    }
-  }, [])
+    };
+  }, []);
 
-  const [showMainModal, setShowMainModal] = useState(false)
-  const [showChatWidget, setShowChatWidget] = useState(false)
-  const [showScheduleModal, setShowScheduleModal] = useState(false)
-  const [initialMessage, setInitialMessage] = useState("")
+  const [showMainModal, setShowMainModal] = useState(false);
+  const [showChatWidget, setShowChatWidget] = useState(false);
+  const [showScheduleModal, setShowScheduleModal] = useState(false);
+  const [initialMessage, setInitialMessage] = useState("");
 
   // Floating avatar states
-  const [showPopup, setShowPopup] = useState(false)
-  const [showHiFive, setShowHiFive] = useState(false)
+  const [showPopup, setShowPopup] = useState(false);
+  const [showHiFive, setShowHiFive] = useState(false);
 
   // Chat states
-  const [messages, setMessages] = useState<Message[]>([])
-  const [input, setInput] = useState("")
-  const [isTyping, setIsTyping] = useState(false)
-  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   // Modal states
-  const [isExpanded, setIsExpanded] = useState(false)
-  const [activeTab, setActiveTab] = useState<"home" | "chat">("home")
-  const [currentMonth, setCurrentMonth] = useState(new Date())
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [activeTab, setActiveTab] = useState<"home" | "chat">("home");
+  const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  const apiKey = import.meta.env.VITE_XAI_API_KEY
+  const apiKey = import.meta.env.VITE_XAI_API_KEY;
 
   // Floating avatar effects
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShowPopup(true)
-    }, 3000)
-    return () => clearTimeout(timer)
-  }, [])
+      setShowPopup(true);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setShowHiFive(true)
-      setTimeout(() => setShowHiFive(false), 1000)
-    }, 8000)
-    return () => clearInterval(interval)
-  }, [])
+      setShowHiFive(true);
+      setTimeout(() => setShowHiFive(false), 1000);
+    }, 8000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Chat effects
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   useEffect(() => {
-    scrollToBottom()
-  }, [messages])
+    scrollToBottom();
+  }, [messages]);
 
   useEffect(() => {
     if (showChatWidget) {
@@ -248,36 +252,39 @@ export default function AIWidgetOnly() {
         from: "ai",
         text: "Hi there! I'm Emma, your business assistant. How can I help you grow your company today?",
         timestamp: new Date(),
-      }
-      setMessages([welcomeMessage])
+      };
+      setMessages([welcomeMessage]);
 
       if (initialMessage) {
         setTimeout(() => {
-          handleSendMessage(initialMessage)
-        }, 1000)
+          handleSendMessage(initialMessage);
+        }, 1000);
       }
     }
-  }, [showChatWidget, initialMessage])
+  }, [showChatWidget, initialMessage]);
 
   // Helper functions
   const getTimeBasedGreeting = () => {
-    const hour = new Date().getHours()
-    if (hour < 12) return { text: "Good morning", emoji: "☀️" }
-    if (hour < 17) return { text: "Good afternoon", emoji: "🌤️" }
-    return { text: "Good evening", emoji: "🌙" }
-  }
+    const hour = new Date().getHours();
+    if (hour < 12) return { text: "Good morning", emoji: "☀️" };
+    if (hour < 17) return { text: "Good afternoon", emoji: "🌤️" };
+    return { text: "Good evening", emoji: "🌙" };
+  };
 
   useEffect(() => {
-    console.log("[v0] XAI API Key:", import.meta.env.VITE_XAI_API_KEY ? "✅ Loaded" : "❌ Missing")
+    console.log(
+      "[v0] XAI API Key:",
+      import.meta.env.VITE_XAI_API_KEY ? "✅ Loaded" : "❌ Missing",
+    );
     console.log(
       "[v0] API Key value (first 20 chars):",
       import.meta.env.VITE_XAI_API_KEY?.substring(0, 20) || "undefined",
-    )
-  }, [])
+    );
+  }, []);
 
   const formatTime = (date: Date) => {
-    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
-  }
+    return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  };
 
   // Calendar helpers
   const monthNames = [
@@ -293,46 +300,46 @@ export default function AIWidgetOnly() {
     "October",
     "November",
     "December",
-  ]
+  ];
 
-  const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+  const daysOfWeek = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
   const getDaysInMonth = (date: Date) => {
-    const year = date.getFullYear()
-    const month = date.getMonth()
-    const firstDay = new Date(year, month, 1)
-    const lastDay = new Date(year, month + 1, 0)
-    const daysInMonth = lastDay.getDate()
-    const startingDayOfWeek = (firstDay.getDay() + 6) % 7
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = (firstDay.getDay() + 6) % 7;
 
-    const days = []
+    const days = [];
     for (let i = 0; i < startingDayOfWeek; i++) {
-      days.push(null)
+      days.push(null);
     }
     for (let day = 1; day <= daysInMonth; day++) {
-      days.push(day)
+      days.push(day);
     }
-    return days
-  }
+    return days;
+  };
 
   // Event handlers
   const handleOpenChat = (message?: string) => {
-    setInitialMessage(message || "")
-    setShowChatWidget(true)
-    setShowMainModal(false)
-  }
+    setInitialMessage(message || "");
+    setShowChatWidget(true);
+    setShowMainModal(false);
+  };
 
   const handleNavigateHome = () => {
-    setShowMainModal(false)
-    setShowChatWidget(false)
-  }
+    setShowMainModal(false);
+    setShowChatWidget(false);
+  };
 
   const handleSendMessage = async (messageText?: string) => {
-    const text = messageText || input.trim()
-    if (!text) return
+    const text = messageText || input.trim();
+    if (!text) return;
 
     if (!apiKey) {
-      console.error("[v0] XAI API Key is missing!")
+      console.error("[v0] XAI API Key is missing!");
       setMessages((prev) => [
         ...prev,
         {
@@ -341,9 +348,9 @@ export default function AIWidgetOnly() {
           text: "⚠️ Error: XAI API key is not configured. Please add VITE_XAI_API_KEY to your environment variables.",
           timestamp: new Date(),
         },
-      ])
-      setIsTyping(false)
-      return
+      ]);
+      setIsTyping(false);
+      return;
     }
 
     const userMessage: Message = {
@@ -351,17 +358,17 @@ export default function AIWidgetOnly() {
       from: "user",
       text,
       timestamp: new Date(),
-    }
+    };
 
-    const updatedMessages = [...messages, userMessage]
-    setMessages(updatedMessages)
-    if (!messageText) setInput("")
-    setIsTyping(true)
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
+    if (!messageText) setInput("");
+    setIsTyping(true);
 
     try {
-      console.log("[v0] Sending request to XAI API...")
-      console.log("[v0] Using model: grok-2")
-      console.log("[v0] API Key (first 20 chars):", apiKey.substring(0, 20))
+      console.log("[v0] Sending request to XAI API...");
+      console.log("[v0] Using model: grok-2");
+      console.log("[v0] API Key (first 20 chars):", apiKey.substring(0, 20));
 
       const res = await fetch("https://api.x.ai/v1/chat/completions", {
         method: "POST",
@@ -390,32 +397,35 @@ You represent Emmatech and help clients understand our services, answer question
           temperature: 0.7,
           max_tokens: 1024,
         }),
-      })
+      });
 
-      console.log("[v0] Response status:", res.status)
-      const data = await res.json()
-      console.log("[v0] Response data:", data)
+      console.log("[v0] Response status:", res.status);
+      const data = await res.json();
+      console.log("[v0] Response data:", data);
 
       if (!res.ok) {
-        const errorMessage = data.error?.message || data.message || `API Error: ${res.status}`
+        const errorMessage =
+          data.error?.message || data.message || `API Error: ${res.status}`;
         console.error("[v0] XAI API Error Details:", {
           status: res.status,
           error: data.error,
           message: errorMessage,
-        })
-        throw new Error(errorMessage)
+        });
+        throw new Error(errorMessage);
       }
 
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         from: "ai",
-        text: data.choices?.[0]?.message?.content?.trim() || "❌ Sorry, I couldn't generate a response.",
+        text:
+          data.choices?.[0]?.message?.content?.trim() ||
+          "❌ Sorry, I couldn't generate a response.",
         timestamp: new Date(),
-      }
+      };
 
-      setMessages((prev) => [...prev, aiMessage])
+      setMessages((prev) => [...prev, aiMessage]);
     } catch (err: any) {
-      console.error("[v0] XAI Error:", err)
+      console.error("[v0] XAI Error:", err);
       setMessages((prev) => [
         ...prev,
         {
@@ -424,29 +434,33 @@ You represent Emmatech and help clients understand our services, answer question
           text: `⚠️ Error: ${err.message}`,
           timestamp: new Date(),
         },
-      ])
+      ]);
     } finally {
-      setIsTyping(false)
+      setIsTyping(false);
     }
-  }
+  };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault()
-      handleSendMessage()
+      e.preventDefault();
+      handleSendMessage();
     }
-  }
+  };
 
   const nextMonth = () => {
-    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))
-  }
+    setCurrentMonth(
+      new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1),
+    );
+  };
 
   const prevMonth = () => {
-    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))
-  }
+    setCurrentMonth(
+      new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1),
+    );
+  };
 
-  const greeting = getTimeBasedGreeting()
-  const days = getDaysInMonth(currentMonth)
+  const greeting = getTimeBasedGreeting();
+  const days = getDaysInMonth(currentMonth);
 
   const caseStudies = [
     {
@@ -459,7 +473,7 @@ You represent Emmatech and help clients understand our services, answer question
       image:
         "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=64&h=64",
     },
-  ]
+  ];
 
   return (
     <div>
@@ -467,46 +481,95 @@ You represent Emmatech and help clients understand our services, answer question
       {!showChatWidget && (
         <div className="fixed bottom-6 right-6 z-50">
           {/* Popup Message */}
-          <AnimatePresence>
-            {showPopup && (
-              <motion.div
-                initial={{ opacity: 0, y: 20, scale: 0.8 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 20, scale: 0.8 }}
-                className="absolute bottom-20 right-0 mb-4"
+         <AnimatePresence>
+  {showPopup && (
+    <motion.div
+      initial={{ opacity: 0, y: 20, scale: 0.8 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: 20, scale: 0.8 }}
+      className="absolute bottom-20 right-0 mb-4 z-50"
+    >
+      {/* Wrapper so X can float outside */}
+      <div className="relative w-80">
+
+        {/* Floating curved X button */}
+        <button
+          onClick={() => setShowPopup(false)}
+          className="
+            absolute
+            -top-3
+            -right-3
+            z-20
+            w-9
+            h-9
+            rounded-full
+            bg-white
+            border
+            border-gray-200
+            shadow-md
+            hover:bg-red-50
+            hover:border-red-200
+            transition-all
+            duration-200
+            flex
+            items-center
+            justify-center
+          "
+        >
+          <X className="h-4 w-4 text-gray-600 hover:text-red-600" />
+        </button>
+
+        {/* Card with curved top-right feel */}
+        <Card
+          className="
+            p-4
+            w-80
+            relative
+            overflow-hidden
+            rounded-2xl
+            rounded-tr-3xl
+            bg-white
+            border
+            border-gray-200
+            shadow-xl
+          "
+        >
+          {/* soft background glow */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-50/40 via-white to-indigo-50/30 pointer-events-none" />
+
+          <div className="flex items-start space-x-3 relative z-10">
+            <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-blue-100">
+              <img
+                src="https://media.istockphoto.com/id/1299077582/photo/positivity-puts-you-in-a-position-of-power.jpg?s=612x612&w=0&k=20&c=baDuyrwRTscUZzyAqV44hnCq7d6tXUqwf26lJTcAE0A="
+                alt="Emma - Business Assistant"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            <div className="flex-1">
+              <p className="text-sm font-medium text-gray-900 mb-2 leading-snug">
+                Hi, I'm Emma! Looking for a partner to boost your company's growth?
+              </p>
+
+              <button
+                onClick={() => handleOpenChat("I want to talk to Emma")}
+                className="
+                  text-xs
+                  font-medium
+                  text-blue-600
+                  hover:text-blue-700
+                  transition-colors
+                "
               >
-                <Card className="p-4 w-80 shadow-xl relative border border-border rounded-lg bg-white dark:bg-gray-800">
-                  <button
-                    className="absolute top-2 right-2 h-6 w-6 p-0 rounded-md hover:bg-gray-200 z-10 flex items-center justify-center"
-                    onClick={() => setShowPopup(false)}
-                    style={{ backgroundColor: "transparent" }}
-                  >
-                    <X className="h-4 w-4" style={{ color: "#374151" }} />
-                  </button>
-                  <div className="flex items-start space-x-3">
-                    <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
-                      <img
-                        src="https://media.istockphoto.com/id/1299077582/photo/positivity-puts-you-in-a-position-of-power.jpg?s=612x612&w=0&k=20&c=baDuyrwRTscUZzyAqV44hnCq7d6tXUqwf26lJTcAE0A="
-                        alt="Emma - Business Assistant"
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-foreground mb-1">
-                        Hi, I'm Emma! Looking for a partner to boost your company's growth?
-                      </p>
-                      <button
-                        onClick={() => handleOpenChat("I want to talk to Emma")}
-                        className="text-xs text-muted-foreground hover:text-foreground transition-colors"
-                      >
-                        Talk to Emma
-                      </button>
-                    </div>
-                  </div>
-                </Card>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                Talk to Emma →
+              </button>
+            </div>
+          </div>
+        </Card>
+      </div>
+    </motion.div>
+  )}
+</AnimatePresence>
 
           {/* Main Avatar Button */}
           <motion.button
@@ -558,7 +621,9 @@ You represent Emmatech and help clients understand our services, answer question
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
               className={`bg-white rounded-xl shadow-xl transition-all duration-300 ${
-                isExpanded ? "w-full h-full max-w-none max-h-none" : "max-w-md w-full max-h-[90vh]"
+                isExpanded
+                  ? "w-full h-full max-w-none max-h-none"
+                  : "max-w-md w-full max-h-[90vh]"
               } overflow-y-auto`}
             >
               {/* Header */}
@@ -573,10 +638,22 @@ You represent Emmatech and help clients understand our services, answer question
                   </div>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Button variant="ghost" size="sm" onClick={() => setIsExpanded(!isExpanded)}>
-                    {isExpanded ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setIsExpanded(!isExpanded)}
+                  >
+                    {isExpanded ? (
+                      <Minimize2 className="h-4 w-4" />
+                    ) : (
+                      <Maximize2 className="h-4 w-4" />
+                    )}
                   </Button>
-                  <Button variant="ghost" size="sm" onClick={() => setShowMainModal(false)}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowMainModal(false)}
+                  >
                     <X className="h-4 w-4" />
                   </Button>
                 </div>
@@ -612,7 +689,11 @@ You represent Emmatech and help clients understand our services, answer question
                         />
                         <span>Talk to Emma</span>
                       </Button>
-                      <Button onClick={() => handleOpenChat()} variant="outline" className="px-4 py-2 rounded-lg">
+                      <Button
+                        onClick={() => handleOpenChat()}
+                        variant="outline"
+                        className="px-4 py-2 rounded-lg"
+                      >
                         Chat
                       </Button>
                     </div>
@@ -627,7 +708,9 @@ You represent Emmatech and help clients understand our services, answer question
                     </Button>
 
                     <Button
-                      onClick={() => handleOpenChat("I have a question about your services")}
+                      onClick={() =>
+                        handleOpenChat("I have a question about your services")
+                      }
                       variant="outline"
                       className="w-full flex items-center justify-center space-x-2 py-3"
                     >
@@ -642,7 +725,10 @@ You represent Emmatech and help clients understand our services, answer question
                   <h3 className="font-semibold text-gray-900 mb-4">Discover</h3>
                   <div className="grid grid-cols-1 gap-4">
                     {caseStudies.map((study, index) => (
-                      <Card key={index} className="p-4 hover:bg-gray-50 transition-colors cursor-pointer">
+                      <Card
+                        key={index}
+                        className="p-4 hover:bg-gray-50 transition-colors cursor-pointer"
+                      >
                         <div className="flex items-center space-x-3">
                           <img
                             src={study.image || "/placeholder.svg"}
@@ -650,7 +736,9 @@ You represent Emmatech and help clients understand our services, answer question
                             className="w-16 h-16 rounded-lg object-cover"
                           />
                           <div>
-                            <h4 className="font-medium text-gray-900">{study.title}</h4>
+                            <h4 className="font-medium text-gray-900">
+                              {study.title}
+                            </h4>
                           </div>
                         </div>
                       </Card>
@@ -662,8 +750,8 @@ You represent Emmatech and help clients understand our services, answer question
                 <div className="flex justify-center space-x-8 mb-6">
                   <button
                     onClick={() => {
-                      setActiveTab("home")
-                      handleNavigateHome()
+                      setActiveTab("home");
+                      handleNavigateHome();
                     }}
                     className={`flex flex-col items-center space-y-1 ${
                       activeTab === "home" ? "text-primary" : "text-gray-400"
@@ -674,8 +762,8 @@ You represent Emmatech and help clients understand our services, answer question
                   </button>
                   <button
                     onClick={() => {
-                      setActiveTab("chat")
-                      handleOpenChat()
+                      setActiveTab("chat");
+                      handleOpenChat();
                     }}
                     className={`flex flex-col items-center space-y-1 ${
                       activeTab === "chat" ? "text-primary" : "text-gray-400"
@@ -688,7 +776,9 @@ You represent Emmatech and help clients understand our services, answer question
 
                 {/* Footer */}
                 <div className="text-center">
-                  <p className="text-xs text-gray-400">Powered by Emmatech AI</p>
+                  <p className="text-xs text-gray-400">
+                    Powered by Emmatech AI
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -715,34 +805,52 @@ You represent Emmatech and help clients understand our services, answer question
             >
               <div className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <img src="/images/logo.png" alt="Emma" className="w-8 h-8 rounded-full object-cover flex-shrink-0" />
-                  <Button variant="ghost" size="sm" onClick={() => setShowScheduleModal(false)}>
+                  <img
+                    src="/images/logo.png"
+                    alt="Emma"
+                    className="w-8 h-8 rounded-full object-cover flex-shrink-0"
+                  />
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowScheduleModal(false)}
+                  >
                     <X className="h-4 w-4" />
                   </Button>
                 </div>
 
                 <div className="mb-6">
-                  <h2 className="text-lg font-semibold text-gray-900 mb-1">Emmatech</h2>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Intro Meeting with Emmatech's Team</h3>
+                  <h2 className="text-lg font-semibold text-gray-900 mb-1">
+                    Emmatech
+                  </h2>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    Intro Meeting with Emmatech's Team
+                  </h3>
                   <div className="flex items-center space-x-4 text-sm text-gray-600 mb-4">
                     <span>⏱️ 45 min</span>
-                    <span>💻 Web conferencing details provided upon confirmation.</span>
+                    <span>
+                      💻 Web conferencing details provided upon confirmation.
+                    </span>
                   </div>
                   <p className="text-sm text-gray-600">
-                    Demo / Intro call to meet, greet and find out how Emmatech can help with your web development, app
-                    development, software development, or UI/UX design needs.
+                    Demo / Intro call to meet, greet and find out how Emmatech
+                    can help with your web development, app development,
+                    software development, or UI/UX design needs.
                   </p>
                 </div>
 
                 <div className="mb-6">
-                  <h4 className="font-semibold text-gray-900 mb-4">Select a Date & Time</h4>
+                  <h4 className="font-semibold text-gray-900 mb-4">
+                    Select a Date & Time
+                  </h4>
 
                   <div className="flex items-center justify-between mb-4">
                     <Button variant="ghost" size="sm" onClick={prevMonth}>
                       <ChevronLeft className="h-4 w-4" />
                     </Button>
                     <h5 className="font-medium">
-                      {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
+                      {monthNames[currentMonth.getMonth()]}{" "}
+                      {currentMonth.getFullYear()}
                     </h5>
                     <Button variant="ghost" size="sm" onClick={nextMonth}>
                       <ChevronRight className="h-4 w-4" />
@@ -751,7 +859,10 @@ You represent Emmatech and help clients understand our services, answer question
 
                   <div className="grid grid-cols-7 gap-1 mb-4">
                     {daysOfWeek.map((day) => (
-                      <div key={day} className="text-center text-xs font-medium text-gray-500 py-2">
+                      <div
+                        key={day}
+                        className="text-center text-xs font-medium text-gray-500 py-2"
+                      >
                         {day}
                       </div>
                     ))}
@@ -776,7 +887,9 @@ You represent Emmatech and help clients understand our services, answer question
                     <Globe className="h-4 w-4" />
                     <span>Time zone</span>
                   </div>
-                  <p className="text-sm text-gray-900 mt-1">West Africa Time (09:05)</p>
+                  <p className="text-sm text-gray-900 mt-1">
+                    West Africa Time (09:05)
+                  </p>
                 </div>
               </div>
             </motion.div>
@@ -841,13 +954,17 @@ You represent Emmatech and help clients understand our services, answer question
                     )}
                     <div
                       className={`rounded-xl px-4 py-3 max-w-xs ${
-                        message.from === "user" ? "chat-bubble-user text-white" : "chat-bubble-ai"
+                        message.from === "user"
+                          ? "chat-bubble-user text-white"
+                          : "chat-bubble-ai"
                       }`}
                     >
                       <p className="text-sm">{message.text}</p>
                       <span
                         className={`text-xs mt-1 block ${
-                          message.from === "user" ? "text-primary-foreground/80" : "text-muted-foreground"
+                          message.from === "user"
+                            ? "text-primary-foreground/80"
+                            : "text-muted-foreground"
                         }`}
                       >
                         {formatTime(message.timestamp)}
@@ -901,5 +1018,5 @@ You represent Emmatech and help clients understand our services, answer question
         )}
       </AnimatePresence>
     </div>
-  )
+  );
 }

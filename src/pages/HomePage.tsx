@@ -4,7 +4,7 @@ import Hero from "../components/Hero";
 import Services from "../components/Services";
 import About from "../components/About";
 import Portfolio from "../components/Portfolio";
-import Team from "../components/Team";
+// import Team from "../components/Team";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 
@@ -56,7 +56,7 @@ export default function HomePage() {
         <Portfolio />
       </motion.div>
 
-      <motion.div
+      {/* <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -64,7 +64,7 @@ export default function HomePage() {
         variants={fadeInUp}
       >
         <Team />
-      </motion.div>
+      </motion.div> */}
 
       <motion.div
         initial="hidden"

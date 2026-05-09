@@ -6,7 +6,7 @@ import {
   Users,
   Award,
 } from "lucide-react";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 export default function About() {
@@ -97,7 +97,7 @@ export default function About() {
         </div>
         <h2 className="text-4xl font-bold mb-4">Meet EmmaTech</h2>
         <p className="text-lg text-gray-600 leading-relaxed">
-          At Mexygabriel, we build digital solutions that serve people and power
+          At EmmaTech, we build digital solutions that serve people and power
           progress. Our mission is to create ecosystems that solve real problems
           and drive meaningful impact. With a multidisciplinary team and a
           human–first approach, we simplify complexity, scale innovation, and
