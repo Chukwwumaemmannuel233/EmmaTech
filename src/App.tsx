@@ -1,5 +1,7 @@
-import { Routes, Route } from "react-router-dom";
+import { Navigate, Routes, Route } from "react-router-dom";
+import { Toaster } from "sonner";
 import Header from "./components/Header";
+import SEOManager from "./components/SEOManager";
 // import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/about";
@@ -20,15 +22,13 @@ import BlogPage from "./pages/blog";
 import TermsOfService from "./pages/terms";
 import CookiesPolicy from "./pages/cookies";
 import ServicesPage from "./pages/service";
+import GetAQuotePage from "./pages/get-a-quote";
+import SolutionsPage from "./pages/solutions";
 import SoftwareDevelopmentPage from "./pages/services/software-development";
-import CloudInfrastructurePage from "./pages/services/cloud-infastructure";
 // import TalkToEngineerPage from "./pages/talk-to-engineer";
 import SeeHowWeBuildPage from "./pages/see-how-we-build";
-import AutomationPage from "./pages/services/automation";
-import DataIntelligencePage from "./pages/services/data-intelligence";
 import ManagedITServicesPage from "./pages/services/managed-it-services";
 import UIUXDesignPage from "./pages/services/uiux-design";
-import CybersecurityPage from "./pages/services/cybersecurity";
 import SEOOptimizationPage from "./pages/services/seo";
 import ConsultationPage from "./pages/services/consulting";
 import WatchDemo from "./pages/watchdemo";
@@ -41,6 +41,7 @@ import AIWidgetOnly from "./components/AIWidget";
 function App() {
   return (
     <div className="bg-white">
+      <SEOManager />
       <Header activeSection="home" />
       <Routes>
         {/* Default route (/) should go to HomePage */}
@@ -63,20 +64,38 @@ function App() {
          <Route path="/terms" element={<TermsOfService />} />
          <Route path="/cookies" element={<CookiesPolicy />} />
          <Route path="/service" element={<ServicesPage />} />
+         <Route path="/get-a-quote" element={<GetAQuotePage />} />
+         <Route path="/solutions" element={<SolutionsPage />} />
          <Route path="/services/software-development" element={<SoftwareDevelopmentPage />} />
-         <Route path="/services/cloud-infastructure" element={<CloudInfrastructurePage />} />
          <Route path="/see-how-we-build" element={<SeeHowWeBuildPage />} />
-         <Route path="/services/automation" element={<AutomationPage />} />
-         <Route path="/services/data-intelligence" element={<DataIntelligencePage />} />
          <Route path="/services/managed-it-services" element={<ManagedITServicesPage />} />
          <Route path="/services/uiux-design" element={<UIUXDesignPage />} />
-         <Route path="/services/cybersecurity" element={<CybersecurityPage />} />
          <Route path="/services/seo" element={<SEOOptimizationPage />} />
          <Route path="/services/consulting" element={<ConsultationPage />} />
+         <Route path="/services/cloud-infastructure" element={<Navigate to="/service" replace />} />
+         <Route path="/services/automation" element={<Navigate to="/service" replace />} />
+         <Route path="/services/data-intelligence" element={<Navigate to="/service" replace />} />
+         <Route path="/services/cybersecurity" element={<Navigate to="/service" replace />} />
          <Route path="/watchdemo" element={<WatchDemo />} />
       </Routes>
        {/* Keep widget fixed */}
     <AIWidgetOnly />
+    <Toaster
+      position="top-right"
+      richColors
+      closeButton
+      toastOptions={{
+        duration: 4000,
+        classNames: {
+          toast:
+            "emmatech-toast rounded-xl border border-blue-100 bg-white/95 shadow-2xl backdrop-blur",
+          title: "text-gray-950 font-semibold",
+          description: "text-gray-600",
+          actionButton: "bg-blue-600",
+          closeButton: "border-gray-200 bg-white text-gray-500",
+        },
+      }}
+    />
     </div>
   );
 }

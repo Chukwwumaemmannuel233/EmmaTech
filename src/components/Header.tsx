@@ -57,12 +57,12 @@ const Header: React.FC<HeaderProps> = ({ activeSection }) => {
 
   const services = [
     { name: "Software Development", to: "/services/software-development" },
-    { name: "Cloud Infrastructure", to: "/services/cloud-infastructure" },
-    { name: "Automation", to: "/services/automation" },
-    { name: "Data Intelligence", to: "/services/data-intelligence" },
+    // { name: "Cloud Infrastructure", to: "/services/cloud-infastructure" },
+    // { name: "Automation", to: "/services/automation" },
+    // { name: "Data Intelligence", to: "/services/data-intelligence" },
     { name: "Managed IT Services", to: "/services/managed-it-services" },
     { name: "UI/UX Design", to: "/services/uiux-design" },
-    { name: "Cybersecurity", to: "/services/cybersecurity" },
+    // { name: "Cybersecurity", to: "/services/cybersecurity" },
     { name: "SEO Optimization", to: "/services/seo" },
     { name: "Consulting", to: "/services/consulting" },
   ];
@@ -195,21 +195,21 @@ const Header: React.FC<HeaderProps> = ({ activeSection }) => {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -10, scale: 0.95 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute top-full left-0 mt-2 w-64 bg-black text-white rounded-lg shadow-xl p-4 z-50"
+                      className="absolute top-full left-0 mt-3 w-72 bg-white text-gray-800 border border-gray-100 shadow-2xl p-3 z-50"
                     >
-                      <ul className="space-y-2">
+                      <ul className="space-y-1">
                         <li>
                           <motion.a
                             href="/service"
-                            className="block hover:text-blue-400 transition-colors cursor-pointer"
+                            className="block px-3 py-2 font-semibold text-gray-950 hover:bg-blue-50 hover:text-blue-600 transition-colors cursor-pointer"
                             whileHover={{ x: 4 }}
                             transition={{ duration: 0.2 }}
                           >
-                            Services (Main)
+                            All Services
                           </motion.a>
                         </li>
 
-                        <hr className="border-gray-700" />
+                        <hr className="border-gray-100 my-2" />
 
                         {services.map((service, index) => (
                           <motion.li
@@ -220,7 +220,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection }) => {
                           >
                             <motion.a
                               href={service.to}
-                              className="block hover:text-blue-400 transition-colors cursor-pointer"
+                              className="block px-3 py-2 hover:bg-blue-50 hover:text-blue-600 transition-colors cursor-pointer"
                               whileHover={{ x: 4 }}
                               transition={{ duration: 0.2 }}
                             >
@@ -304,9 +304,9 @@ const Header: React.FC<HeaderProps> = ({ activeSection }) => {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: -10, scale: 0.95 }}
                       transition={{ duration: 0.2 }}
-                      className="absolute top-full left-0 mt-2 w-56 bg-black text-white rounded-lg shadow-xl p-4 z-50"
+                      className="absolute top-full left-0 mt-3 w-56 bg-white text-gray-800 border border-gray-100 shadow-2xl p-3 z-50"
                     >
-                      <ul className="space-y-2">
+                      <ul className="space-y-1">
                         {contactLinks.map((link, index) => (
                           <motion.li
                             key={link.to}
@@ -316,7 +316,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection }) => {
                           >
                             <motion.a
                               href={link.to}
-                              className="block hover:text-blue-400 transition-colors cursor-pointer"
+                              className="block px-3 py-2 hover:bg-blue-50 hover:text-blue-600 transition-colors cursor-pointer"
                               whileHover={{ x: 4 }}
                               transition={{ duration: 0.2 }}
                             >
@@ -330,21 +330,22 @@ const Header: React.FC<HeaderProps> = ({ activeSection }) => {
                 </AnimatePresence>
               </motion.div>
 
-              {/* Get Started Button */}
+              {/* Quote Button */}
               <motion.div
                 variants={navItemVariants}
                 initial="visible"
                 animate={isAtTop ? "visible" : "hidden"}
                 transition={{ duration: 0.3, delay: isAtTop ? 0.6 : 0 }}
               >
-                <motion.button
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-colors duration-200"
+                <motion.a
+                  href="/get-a-quote"
+                  className="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white px-5 py-2.5 rounded-full font-semibold transition-colors duration-200"
                   whileHover={{ scale: 1.05, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                   transition={{ duration: 0.2 }}
                 >
-                  Get Started
-                </motion.button>
+                  Get a Free Quote
+                </motion.a>
               </motion.div>
             </div>
 
@@ -455,9 +456,12 @@ const Header: React.FC<HeaderProps> = ({ activeSection }) => {
 
                   {/* Button */}
                   <div className="p-5 border-t">
-                    <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-full font-medium">
-                      Get Started
-                    </button>
+                    <a
+                      href="/get-a-quote"
+                      className="block w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-full font-semibold text-center transition-colors"
+                    >
+                      Get a Free Quote
+                    </a>
                   </div>
                 </motion.div>
               )}
@@ -483,7 +487,7 @@ const Header: React.FC<HeaderProps> = ({ activeSection }) => {
                       href="/service"
                       className="block text-lg text-gray-800 hover:text-blue-600"
                     >
-                      Services (Main)
+                      All Services
                     </a>
 
                     {services.map((service) => (

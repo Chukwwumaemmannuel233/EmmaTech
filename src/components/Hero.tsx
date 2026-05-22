@@ -1,4 +1,4 @@
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, Compass } from "lucide-react";
 
 const Hero: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ const Hero: React.FC = () => {
       <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-blue-800 to-teal-700">
         <div className="absolute inset-0 bg-black/20" />
         <div
-          className="absolute inset-0"
+          className="absolute inset-0 hero-background-drift"
           style={{
             backgroundImage:
               'url("https://images.pexels.com/photos/373543/pexels-photo-373543.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop")',
@@ -46,19 +46,19 @@ const Hero: React.FC = () => {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
-              href="/contact"
+              href="/get-a-quote"
               className="group bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full flex items-center space-x-2 transition-all duration-300 transform hover:scale-105"
             >
-              <span className="font-semibold">Start Your Project</span>
+              <span className="font-semibold">Get a Free Quote</span>
               <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </a>
 
             <a
-              href="/watchdemo"
+              href="/solutions"
               className="group border-2 border-white/30 hover:border-white text-white px-8 py-4 rounded-full flex items-center space-x-2 transition-all duration-300 hover:bg-white/10"
             >
-              <Play className="h-5 w-5" />
-              <span className="font-semibold">Watch Demo</span>
+              <Compass className="h-5 w-5" />
+              <span className="font-semibold">Explore Solutions</span>
             </a>
           </div>
 

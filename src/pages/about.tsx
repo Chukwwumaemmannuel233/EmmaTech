@@ -1,425 +1,406 @@
+import { useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { Link } from "react-router-dom";
 import {
   ArrowRight,
-  Target,
+  CheckCircle2,
+  Code2,
   Lightbulb,
   Shield,
+  Target,
   Users,
-  Award,
 } from "lucide-react";
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 
-export default function About() {
-  const words = ["Vision", "Execution", "Strategy", "Innovation"];
-  const [text, setText] = useState("");
-  const [wordIndex, setWordIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
+const stats = [
+  {
+    value: 5,
+    suffix: "+",
+    label: "Years of Experience",
+    text: "Building and supporting digital solutions.",
+  },
+  {
+    value: 6,
+    suffix: "+",
+    label: "Expert Team Members",
+    text: "Focused on design, development, and support.",
+  },
+  {
+    value: 24,
+    suffix: "/7",
+    label: "Support Mindset",
+    text: "Practical help when your systems need attention.",
+  },
+];
+
+const values = [
+  {
+    icon: Target,
+    title: "Purposeful Delivery",
+    text: "We focus on useful solutions that solve real business problems.",
+  },
+  {
+    icon: Lightbulb,
+    title: "Practical Innovation",
+    text: "We use modern ideas without adding unnecessary complexity.",
+  },
+  {
+    icon: Users,
+    title: "Client Alignment",
+    text: "We listen closely, communicate clearly, and build around your goals.",
+  },
+  {
+    icon: Shield,
+    title: "Reliable Standards",
+    text: "We care about quality, maintainability, and long-term trust.",
+  },
+];
+
+const capabilities = [
+  "Software development",
+  "Managed IT services",
+  "UI/UX design",
+  "SEO optimization",
+  "Technology consulting",
+];
+
+const flowItems = ["Strategy", "Design", "Build", "Support"];
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
+
+const stagger = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.12 },
+  },
+};
+
+const CountUp = ({
+  value,
+  suffix = "",
+}: {
+  value: number;
+  suffix?: string;
+}) => {
+  const ref = useRef<HTMLSpanElement | null>(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
-    const currentWord = words[wordIndex];
-    let typingTimeout: ReturnType<typeof setTimeout>;
+    if (!isInView) return;
 
-    if (isDeleting) {
-      typingTimeout = setTimeout(() => {
-        setText(currentWord.substring(0, text.length - 1));
-      }, 100);
-    } else {
-      typingTimeout = setTimeout(() => {
-        setText(currentWord.substring(0, text.length + 1));
-      }, 150);
-    }
+    let frameId = 0;
+    const duration = 1200;
+    const start = performance.now();
 
-    if (!isDeleting && text === currentWord) {
-      setTimeout(() => setIsDeleting(true), 1000);
-    }
+    const tick = (time: number) => {
+      const progress = Math.min((time - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.round(value * eased));
 
-    if (isDeleting && text === "") {
-      setIsDeleting(false);
-      setWordIndex((prev) => (prev + 1) % words.length);
-    }
+      if (progress < 1) {
+        frameId = requestAnimationFrame(tick);
+      }
+    };
 
-    return () => clearTimeout(typingTimeout);
-  }, [text, isDeleting, wordIndex, words]);
+    frameId = requestAnimationFrame(tick);
 
-  const values = [
-    {
-      icon: Target,
-      title: "Mission-Driven",
-      description:
-        "We are committed to delivering solutions that make a real impact on your business success.",
-    },
-    {
-      icon: Lightbulb,
-      title: "Innovation First",
-      description:
-        "We stay ahead of technology trends to provide cutting-edge solutions for modern challenges.",
-    },
-    {
-      icon: Users,
-      title: "Client-Focused",
-      description:
-        "Your success is our priority. We work closely with you throughout every project phase.",
-    },
-    {
-      icon: Award,
-      title: "Quality Assured",
-      description:
-        "We maintain the highest standards through rigorous testing and code review processes.",
-    },
-  ];
-
-  // Reusable animation variants
-  const fadeUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
-  };
-
-  const stagger = {
-    hidden: {},
-    visible: {
-      transition: { staggerChildren: 0.15 },
-    },
-  };
+    return () => cancelAnimationFrame(frameId);
+  }, [isInView, value]);
 
   return (
-    <div className="bg-white text-gray-900 overflow-hidden">
-      {/* Hero Section */}
-      <motion.section
-        initial="hidden"
-        animate="visible"
-        variants={fadeUp}
-        className="text-center py-20 px-6 max-w-5xl mx-auto"
-      >
-        <div className="flex justify-center mb-6">
-          <div className="p-4 bg-gray-100 rounded-full">
-            <ArrowRight className="w-8 h-8 text-gray-800" />
-          </div>
-        </div>
-        <h2 className="text-4xl font-bold mb-4">Meet EmmaTech</h2>
-        <p className="text-lg text-gray-600 leading-relaxed">
-          At EmmaTech, we build digital solutions that serve people and power
-          progress. Our mission is to create ecosystems that solve real problems
-          and drive meaningful impact. With a multidisciplinary team and a
-          human–first approach, we simplify complexity, scale innovation, and
-          deliver technology that transforms.
-        </p>
-      </motion.section>
+    <span ref={ref}>
+      {count}
+      {suffix}
+    </span>
+  );
+};
 
-      {/* About Section */}
-      <motion.section
-        id="about"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        variants={stagger}
-        className="py-20 bg-white"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <motion.div variants={fadeUp}>
-              <h2 className="text-center text-4xl font-bold text-gray-900 mb-6">
-                About Us
-              </h2>
-              <div className="text-center mb-10">
-                <h2 className="text-4xl font-bold text-gray-900">
-                  Emmatech{" "}
-                  <span className="text-blue-600 border-r-2 border-blue-600 pr-1 animate-pulse">
-                    {text}
-                  </span>
-                </h2>
-              </div>
-              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                TechFlow is a forward-thinking technology company specializing
-                in custom software development, web applications, and digital
-                transformation solutions. We combine technical expertise with
-                creative problem-solving to deliver exceptional results.
-              </p>
+export default function About() {
+  return (
+    <main className="bg-white text-gray-900 overflow-hidden">
+      <section className="relative pt-32 pb-20 bg-gray-950 text-white overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1600&q=80"
+          alt="EmmaTech team planning digital products"
+          className="absolute inset-0 w-full h-full object-cover opacity-20"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-blue-950/90 to-teal-900/75" />
 
-              {/* Stats */}
-              <motion.div variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-                <motion.div variants={fadeUp} className="flex items-start space-x-4 mb-6">
-                  <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <span className="text-blue-600 font-bold text-xl">5+</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Years of Experience</h4>
-                    <p className="text-gray-600">
-                      Delivering innovative solutions across various industries
-                    </p>
-                  </div>
-                </motion.div>
-
-                <motion.div variants={fadeUp} className="flex items-start space-x-4 mb-6">
-                  <div className="flex-shrink-0 w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center">
-                    <span className="text-teal-600 font-bold text-xl">50+</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Expert Developers</h4>
-                    <p className="text-gray-600">
-                      Skilled professionals with diverse technical backgrounds
-                    </p>
-                  </div>
-                </motion.div>
-
-                <motion.div variants={fadeUp} className="flex items-start space-x-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
-                    <span className="text-orange-600 font-bold text-xl">24/7</span>
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-900">Support & Maintenance</h4>
-                    <p className="text-gray-600">
-                      Round-the-clock support for your critical applications
-                    </p>
-                  </div>
-                </motion.div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.8fr] gap-12 items-center">
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={stagger}
+            >
+              <motion.span
+                variants={fadeUp}
+                className="text-blue-300 font-semibold uppercase tracking-wide text-sm"
+              >
+                About EmmaTech
+              </motion.span>
+              <motion.h1
+                variants={fadeUp}
+                className="text-4xl md:text-6xl font-bold mt-4 mb-6"
+              >
+                We turn business ideas into useful digital solutions
+              </motion.h1>
+              <motion.p
+                variants={fadeUp}
+                className="text-lg md:text-xl text-blue-100 leading-relaxed max-w-3xl"
+              >
+                EmmaTech helps growing businesses design, build, improve, and
+                support digital products with clarity, care, and practical
+                execution.
+              </motion.p>
+              <motion.div
+                variants={fadeUp}
+                className="flex flex-col sm:flex-row gap-4 mt-8"
+              >
+                <Link
+                  to="/get-a-quote"
+                  className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                >
+                  Get a Free Quote
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
+                <Link
+                  to="/service"
+                  className="inline-flex items-center justify-center gap-2 border border-white/25 hover:border-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                >
+                  View Services
+                </Link>
               </motion.div>
             </motion.div>
 
             <motion.div
-              variants={fadeUp}
-              className="relative"
-              whileInView={{ opacity: 1, scale: 1 }}
-              initial={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.7, delay: 0.15 }}
+              className="relative min-h-[420px]"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-teal-600 rounded-2xl transform rotate-6"></div>
               <img
-                src="https://images.pexels.com/photos/7688336/pexels-photo-7688336.jpeg?auto=compress&cs=tinysrgb&w=800"
-                alt="Team collaboration"
-                className="relative rounded-2xl shadow-2xl w-full h-96 object-cover"
+                src="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=80"
+                alt="EmmaTech team discussing a digital project"
+                className="absolute inset-0 w-full h-full object-cover shadow-2xl"
               />
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-950/75 via-gray-950/20 to-transparent" />
+
+              <motion.div
+                className="absolute top-6 right-6 bg-white/95 text-gray-950 border border-white/70 shadow-xl p-4 w-48"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 4, repeat: Infinity }}
+              >
+                <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1">
+                  Workflow
+                </p>
+                <p className="font-bold">Plan. Build. Improve.</p>
+              </motion.div>
+
+              <div className="absolute left-5 right-5 bottom-5 bg-gray-950/85 border border-white/10 backdrop-blur p-5">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  {flowItems.map((item, index) => (
+                    <motion.div
+                      key={item}
+                      className="bg-white/8 border border-white/10 p-3"
+                      animate={{ y: [0, -6, 0] }}
+                      transition={{
+                        duration: 3,
+                        repeat: Infinity,
+                        delay: index * 0.25,
+                      }}
+                    >
+                      <p className="text-xs text-blue-200 mb-1">0{index + 1}</p>
+                      <p className="text-sm font-semibold">{item}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
             </motion.div>
           </div>
+        </div>
+      </section>
 
-          {/* Values */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <span className="text-blue-600 font-semibold uppercase tracking-wide text-sm">
+                Who We Are
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-3 mb-5">
+                A technology team focused on practical business progress
+              </h2>
+              <p className="text-lg text-gray-600 leading-relaxed mb-6">
+                We work with clients who need websites, software, digital
+                product design, IT support, SEO improvements, or technology
+                guidance. Our goal is to make technology easier to understand,
+                easier to use, and easier to maintain.
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {capabilities.map((capability) => (
+                  <div
+                    key={capability}
+                    className="flex items-center gap-3 bg-white border border-gray-100 p-4"
+                  >
+                    <CheckCircle2 className="h-5 w-5 text-blue-600" />
+                    <span className="font-medium text-gray-800">
+                      {capability}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 24 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="relative"
+            >
+              <img
+                src="https://images.pexels.com/photos/7688336/pexels-photo-7688336.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                alt="Team collaboration"
+                className="w-full h-[440px] object-cover shadow-xl"
+              />
+              <motion.div
+                className="absolute -bottom-6 left-6 right-6 bg-white border border-gray-100 shadow-xl p-5"
+                initial={{ y: 20, opacity: 0 }}
+                whileInView={{ y: 0, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <div className="flex items-center gap-3">
+                  <Code2 className="h-6 w-6 text-blue-600" />
+                  <p className="font-semibold">
+                    Built with strategy, design, development, and support in one
+                    direction.
+                  </p>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: true }}
+            viewport={{ once: true, amount: 0.35 }}
             variants={stagger}
-            className="mt-20"
+            className="grid grid-cols-1 md:grid-cols-3 gap-6"
           >
-            <h3 className="text-3xl font-bold text-gray-900 text-center mb-12">
-              Our Core Values
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {values.map((value, index) => {
-                const IconComponent = value.icon;
+            {stats.map((stat) => (
+              <motion.div
+                key={stat.label}
+                variants={fadeUp}
+                className="border border-gray-100 bg-gray-50 p-8 text-center"
+              >
+                <div className="text-5xl font-bold text-blue-600 mb-3">
+                  <CountUp value={stat.value} suffix={stat.suffix} />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
+                  {stat.label}
+                </h3>
+                <p className="text-gray-600">{stat.text}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-[0.75fr_1.25fr] gap-12">
+            <div>
+              <span className="text-blue-600 font-semibold uppercase tracking-wide text-sm">
+                Our Values
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-3 mb-4">
+                The standards behind our work
+              </h2>
+              <p className="text-lg text-gray-600">
+                We keep our work grounded in clarity, trust, and useful
+                execution.
+              </p>
+            </div>
+
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={stagger}
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+            >
+              {values.map((value) => {
+                const Icon = value.icon;
                 return (
                   <motion.div
-                    key={index}
+                    key={value.title}
                     variants={fadeUp}
-                    className="text-center group"
-                    whileHover={{ scale: 1.04 }}
-                    transition={{ type: "spring", stiffness: 220, damping: 18 }}
+                    className="bg-white border border-gray-100 p-6"
                   >
-                    <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-teal-600 rounded-full mb-6">
-                      <IconComponent className="h-8 w-8 text-white" />
+                    <div className="w-12 h-12 bg-blue-600 text-white flex items-center justify-center mb-5">
+                      <Icon className="h-6 w-6" />
                     </div>
-                    <h4 className="text-xl font-bold text-gray-900 mb-4">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">
                       {value.title}
-                    </h4>
+                    </h3>
                     <p className="text-gray-600 leading-relaxed">
-                      {value.description}
+                      {value.text}
                     </p>
                   </motion.div>
                 );
               })}
-            </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="border border-gray-100 bg-gray-50 p-8"
+          >
+            <Users className="h-8 w-8 text-blue-600 mb-5" />
+            <h2 className="text-2xl font-bold text-gray-900 mb-3">Mission</h2>
+            <p className="text-gray-600 leading-relaxed">
+              To deliver reliable digital solutions that solve practical
+              business problems and help clients work smarter.
+            </p>
           </motion.div>
 
-          {/* Learn More */}
-          {/* <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mt-16"
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="border border-gray-100 bg-gray-50 p-8"
           >
-            <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-teal-600 text-white font-semibold rounded-full shadow-lg hover:scale-105 transition-transform">
-              Learn More
-            </button>
-          </motion.div> */}
+            <Target className="h-8 w-8 text-blue-600 mb-5" />
+            <h2 className="text-2xl font-bold text-gray-900 mb-3">Vision</h2>
+            <p className="text-gray-600 leading-relaxed">
+              To become a trusted technology partner for businesses that want
+              thoughtful design, dependable systems, and clear execution.
+            </p>
+          </motion.div>
         </div>
-      </motion.section>
-
-      {/* Mission & Vision */}
-      <motion.section
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        className="grid md:grid-cols-2 gap-10 text-center py-16 bg-black px-6"
-      >
-        <div>
-          <div className="flex justify-center mb-4">
-            <Users className="w-10 h-10 text-green-600" />
-          </div>
-          <h3 className="text-2xl font-semibold mb-2 text-white">Mission</h3>
-          <p className="text-white">
-            To deliver intelligent, secure, and scalable digital solutions that
-            solve real-world problems, drive innovation, and create value for
-            every client we serve.
-          </p>
-        </div>
-        <div>
-          <div className="flex justify-center mb-4">
-            <Target className="w-10 h-10 text-green-600" />
-          </div>
-          <h3 className="text-2xl font-semibold mb-2 text-white">Vision</h3>
-          <p className="text-white">
-            To be a global leader in digital transformation empowering
-            governments, institutions, and enterprises worldwide to build
-            smarter, more efficient, and inclusive systems through innovative
-            technology.
-          </p>
-        </div>
-      </motion.section>
-
-      {/* About with Image */}
-      <motion.section
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        className="grid md:grid-cols-2 gap-10 items-center py-20 px-6 max-w-6xl mx-auto"
-      >
-        <div>
-          <h3 className="text-2xl font-bold mb-4">EmmaTech</h3>
-           <p className="text-gray-600 mb-4">
-            At EmmaTech, we are passionate about building digital ecosystems
-            that power smart governments, efficient enterprises, and thriving
-            institutions...
-          </p>
-        </div>
-        <div className="rounded-2xl overflow-hidden shadow-lg h-96">
-          <img
-            src="https://plus.unsplash.com/premium_photo-1745457820708-34cfe481388a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dGVjaCUyMGdhdGhlcmluZ3xlbnwwfHwwfHx8MA%3D%3D"
-            alt="About page"
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </motion.section>
-
-      {/* Innovation + Why Choose Us */}
-      <motion.section
-        variants={stagger}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
-        className="grid md:grid-cols-2 gap-10 py-20 px-6 max-w-6xl mx-auto"
-      >
-        <motion.div
-          className="rounded-2xl overflow-hidden shadow-lg relative"
-          variants={fadeUp}
-        >
-          <img
-            src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d"
-            alt="Innovation"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute bottom-6 left-6 text-white text-2xl font-bold">
-            Where Innovation <br /> Meets Execution.
-          </div>
-        </motion.div>
-
-        <motion.div variants={stagger}>
-          <h3 className="text-2xl font-bold mb-6">Why Choose Us?</h3>
-          <motion.ul className="space-y-4">
-            {[
-              {
-                icon: Lightbulb,
-                text: (
-                  <>
-                    <strong>Innovation–Driven</strong> — We don’t just deploy
-                    technology — we shape ecosystems that deliver long-term impact.
-                  </>
-                ),
-              },
-              {
-                icon: Target,
-                text: (
-                  <>
-                    <strong>Sector–Focused</strong> — Tailored solutions for public
-                    services, education, healthcare, finance, and enterprise operations.
-                  </>
-                ),
-              },
-              {
-                icon: Shield,
-                text: (
-                  <>
-                    <strong>Secure &amp; Scalable</strong> — Built with resilience,
-                    hosted on secure cloud infrastructure, aligned with global data
-                    protection standards.
-                  </>
-                ),
-              },
-              {
-                icon: Users,
-                text: (
-                  <>
-                    <strong>Human–Centered</strong> — Every product is designed with
-                    the end–user in mind, ensuring accessibility, simplicity, and adoption.
-                  </>
-                ),
-              },
-            ].map(({ icon: Icon, text }, i) => (
-              <motion.li
-                key={i}
-                className="flex items-start gap-3"
-                variants={fadeUp}
-              >
-                <Icon className="w-6 h-6 text-green-600" />
-                <span>{text}</span>
-              </motion.li>
-            ))}
-          </motion.ul>
-        </motion.div>
-      </motion.section>
-
-      {/* CTA */}
-      <motion.section
-        variants={fadeUp}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        className="relative text-center py-20 px-6 overflow-hidden"
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-emerald-500 via-black to-blue-600"></div>
-        <div className="relative z-10 max-w-4xl mx-auto">
-          <p className="text-white/80 text-sm font-bold mb-6 tracking-wide">
-            Launch with ease
-          </p>
-          <h2 className="text-white text-3xl md:text-5xl font-bold mb-6">
-            Innovation with a purpose: <br />
-            making life easier. That’s our intention.
-          </h2>
-          <p className="text-gray-200 mb-8 max-w-2xl mx-auto text-lg leading-relaxed">
-            At Emmatech, we innovate with intention. Our mission is simple — to
-            build smart, human–centered tech that solves real problems,
-            simplifies life, and drives lasting impact.
-          </p>
-
-          <div className="flex justify-center gap-4">
-            <a
-              href="/about"
-              className="bg-emerald-500 hover:bg-emerald-600 text-black font-semibold px-8 py-3 rounded-full text-base 
-                   transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
-            >
-              About Us
-            </a>
-            <a
-              href="/services"
-              className="bg-white hover:bg-gray-200 text-black font-semibold px-8 py-3 rounded-full text-base 
-                   transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
-            >
-              Our Services
-            </a>
-          </div>
-        </div>
-      </motion.section>
-    </div>
+      </section>
+    </main>
   );
 }

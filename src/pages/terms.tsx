@@ -1,148 +1,186 @@
-// import React from "react";
 import { motion } from "framer-motion";
-import { FileText, Shield, Lock, AlertTriangle, Info } from "lucide-react";
+import { Link } from "react-router-dom";
+import {
+  AlertTriangle,
+  ArrowRight,
+  CheckCircle2,
+  FileText,
+  Globe,
+  Handshake,
+  Mail,
+  Scale,
+  Shield,
+} from "lucide-react";
 
 const termsSections = [
   {
-    title: "Introduction",
-    description: `These Terms of Service govern your access and use of our platform. By using our services, you agree to these terms. Please read them carefully before proceeding.`,
     icon: FileText,
-    image:
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=600&q=80",
+    title: "Use of This Website",
+    text: "You may browse this website to learn about EmmaTech, our services, and how to contact us. Please do not misuse the site, attempt to disrupt it, or use it for unlawful purposes.",
   },
   {
-    title: "User Responsibilities",
-    description: `You agree to provide accurate information, respect other users, and use the service only for lawful purposes. Any misuse may lead to account suspension or termination.`,
+    icon: Handshake,
+    title: "Service Inquiries",
+    text: "Submitting a contact form or quote request does not automatically create a client relationship. A project begins only after scope, timeline, payment, and terms are agreed.",
+  },
+  {
+    icon: Scale,
+    title: "Project Agreements",
+    text: "Specific work may require a separate proposal, invoice, agreement, or statement of work. Those project terms will apply in addition to these website terms.",
+  },
+  {
     icon: Shield,
-    image:
-      "https://images.unsplash.com/photo-1531497865144-0464ef8fb9a9?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    title: "Accounts & Security",
-    description: `You are responsible for maintaining the confidentiality of your login credentials. Any activities under your account are your responsibility, so please use strong passwords.`,
-    icon: Lock,
-    image:
-      "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=600&q=80",
-  },
-  {
     title: "Intellectual Property",
-    description: `All content, branding, and design belong to us or our licensors. You may not copy, distribute, or exploit our materials without prior written permission.`,
-    icon: FileText,
-    image:
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=600&q=80",
+    text: "The EmmaTech name, website content, visuals, text, and branding belong to EmmaTech or their respective owners. Do not copy or reuse them without permission.",
   },
   {
-    title: "Limitations of Liability",
-    description: `We are not liable for any damages resulting from your use of the service. The platform is provided "as is," without warranties of any kind.`,
+    icon: Globe,
+    title: "Third-Party Links",
+    text: "Our website may link to external websites or tools. We are not responsible for third-party content, policies, or availability.",
+  },
+  {
     icon: AlertTriangle,
-    image:
-      "https://images.unsplash.com/photo-1505238680356-667803448bb6?auto=format&fit=crop&w=600&q=80",
+    title: "Limitations",
+    text: "We try to keep website information accurate, but it may change over time. The website is provided for general information and does not guarantee specific project outcomes.",
   },
-  {
-    title: "Termination",
-    description: `We reserve the right to suspend or terminate accounts that violate these Terms of Service or engage in harmful activities.`,
-    icon: Info,
-    image:
-      "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    title: "Changes to Terms",
-    description: `We may update these Terms periodically. Significant changes will be communicated through our website or email notifications. Continued use implies acceptance.`,
-    icon: Shield,
-    image:
-      "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80",
-  },
+];
+
+const responsibilities = [
+  "Provide accurate information when contacting us",
+  "Use the website lawfully and respectfully",
+  "Do not copy website content without permission",
+  "Review project-specific terms before work begins",
 ];
 
 export default function TermsOfServicePage() {
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-800">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-indigo-600 via-purple-700 to-indigo-500 text-white py-20 text-center">
-        <motion.h1
-          initial={{ y: -30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="text-4xl md:text-5xl font-bold mb-4"
-        >
-          Terms of Service
-        </motion.h1>
-        <motion.p
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-lg md:text-xl max-w-2xl mx-auto opacity-90"
-        >
-          Understand the rules and guidelines for using our platform.
-        </motion.p>
-      </section>
+    <main className="min-h-screen bg-white text-gray-900">
+      <section className="relative pt-32 pb-20 bg-gray-950 text-white overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1600&q=80"
+          alt="Terms and documents"
+          className="absolute inset-0 w-full h-full object-cover opacity-20"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-blue-950/90 to-teal-900/75" />
 
-      {/* Terms Sections */}
-      <section className="py-20 max-w-6xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-12">
-          {termsSections.map((section, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white rounded-2xl shadow-lg p-6 flex flex-col md:flex-row items-center gap-6 hover:shadow-xl transition-shadow duration-300"
-            >
-              <section.icon className="h-12 w-12 text-indigo-600" />
-              <div className="flex-1">
-                <h3 className="font-semibold text-xl mb-2">{section.title}</h3>
-                <p className="text-gray-600">{section.description}</p>
-              </div>
-              <img
-                src={section.image}
-                alt={section.title}
-                className="w-32 h-20 object-cover rounded-lg shadow-md"
-              />
-            </motion.div>
-          ))}
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-4xl"
+          >
+            <span className="text-blue-300 font-semibold uppercase tracking-wide text-sm">
+              Terms of Service
+            </span>
+            <h1 className="text-4xl md:text-6xl font-bold mt-4 mb-6">
+              The basic terms for using EmmaTech's website
+            </h1>
+            <p className="text-lg md:text-xl text-blue-100 leading-relaxed">
+              These terms explain how visitors should use our website and what
+              to expect when contacting EmmaTech about services or project work.
+            </p>
+            <p className="text-sm text-blue-200 mt-6">
+              Last updated: May 22, 2026
+            </p>
+          </motion.div>
         </div>
       </section>
 
-      {/* Conclusion Section */}
-      <section className="py-20 max-w-4xl mx-auto px-6 text-center">
-        <motion.h2
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="text-3xl font-bold mb-6 text-gray-900"
-        >
-          Agreement
-        </motion.h2>
-        <p className="text-gray-700 mb-4">
-          By using our services, you acknowledge that you have read, understood, and agree to these Terms of Service.
-        </p>
-        <img
-          src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=600&q=80"
-          alt="Agreement Illustration"
-          className="mt-6 mx-auto rounded-xl shadow-lg w-96"
-        />
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[0.75fr_1.25fr] gap-10">
+          <aside>
+            <div className="bg-white border border-gray-100 shadow-sm p-6 sticky top-24">
+              <Scale className="h-9 w-9 text-blue-600 mb-5" />
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">
+                Simple terms for a service website
+              </h2>
+              <p className="text-gray-600 leading-relaxed">
+                These terms are written for EmmaTech as a technology services
+                company. Project-specific work can have separate written terms.
+              </p>
+            </div>
+          </aside>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {termsSections.map((section, index) => {
+              const Icon = section.icon;
+
+              return (
+                <motion.article
+                  key={section.title}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: index * 0.04 }}
+                  className="bg-white border border-gray-100 p-6 shadow-sm"
+                >
+                  <div className="w-12 h-12 bg-blue-600 text-white flex items-center justify-center mb-5">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    {section.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {section.text}
+                  </p>
+                </motion.article>
+              );
+            })}
+          </div>
+        </div>
       </section>
 
-      {/* Contact / Support Section */}
-      <section className="py-20 bg-gradient-to-r from-indigo-600 via-purple-700 to-indigo-500 text-white text-center">
-        <motion.h2
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="text-3xl font-bold mb-6"
-        >
-          Need Help?
-        </motion.h2>
-        <p className="mb-6 max-w-xl mx-auto">
-          If you have questions or need clarification about these Terms of Service, our team is ready to assist you.
-        </p>
-        <a
-          href="/support"
-          className="inline-block bg-white text-indigo-600 font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-gray-100 transition-colors duration-300"
-        >
-          Contact Support
-        </a>
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <div>
+            <span className="text-blue-600 font-semibold uppercase tracking-wide text-sm">
+              Visitor Responsibilities
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-3 mb-5">
+              Clear expectations keep things simple
+            </h2>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              By using this website or sending us information, you agree to use
+              the site responsibly and provide accurate details when requesting
+              help, support, or a quote.
+            </p>
+          </div>
+
+          <div className="bg-gray-50 border border-gray-100 p-6">
+            <div className="space-y-4">
+              {responsibilities.map((item) => (
+                <div key={item} className="flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-blue-600 mt-0.5" />
+                  <span className="text-gray-700">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
-    </div>
+
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white border border-gray-100 shadow-sm p-8 md:p-10 text-center">
+            <Mail className="h-10 w-10 text-blue-600 mx-auto mb-5" />
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Questions about these terms?
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+              Contact us if you need clarification before using the site or
+              starting a project.
+            </p>
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+            >
+              Contact EmmaTech
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }

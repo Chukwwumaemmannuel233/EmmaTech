@@ -1,103 +1,107 @@
-import React from 'react';
-import { Code, Smartphone, Cloud, Database, Shield, Zap } from 'lucide-react';
+import React from "react";
+import { Link } from "react-router-dom";
+import {
+  ArrowRight,
+  Code,
+  Headphones,
+  MessageSquare,
+  Palette,
+  Search,
+} from "lucide-react";
+
+const services = [
+  {
+    icon: Code,
+    title: "Software Development",
+    description:
+      "Custom web apps, internal tools, APIs, and software built around real business workflows.",
+    link: "/services/software-development",
+  },
+  {
+    icon: Headphones,
+    title: "Managed IT Services",
+    description:
+      "Reliable IT support, maintenance, and technical assistance for growing teams.",
+    link: "/services/managed-it-services",
+  },
+  {
+    icon: Palette,
+    title: "UI/UX Design",
+    description:
+      "Clean product interfaces that make websites, apps, and dashboards easier to use.",
+    link: "/services/uiux-design",
+  },
+  {
+    icon: Search,
+    title: "SEO Optimization",
+    description:
+      "Practical website improvements that help search engines and customers understand you.",
+    link: "/services/seo",
+  },
+  {
+    icon: MessageSquare,
+    title: "Consulting",
+    description:
+      "Clear technology guidance for planning, improving, and launching digital systems.",
+    link: "/services/consulting",
+  },
+];
 
 const Services: React.FC = () => {
-  const services = [
-    {
-      icon: Code,
-      title: 'Software Development',
-      description: 'Custom software solutions tailored to your business needs, including web, desktop, and API development using modern frameworks.',
-      features: ['Scalable Applications', 'Cross-Platform Support', 'API Integration'],
-      link: '/services/software-development'
-    },
-    {
-      icon: Cloud,
-      title: 'Cloud Infrastructure',
-      description: 'Robust and scalable cloud solutions to deploy, manage, and scale your applications on AWS, Azure, or Google Cloud.',
-      features: ['Auto Scaling', 'High Availability', 'Cost-Effective Deployment'],
-      link: '/services/cloud-infastructure'
-    },
-    {
-      icon: Zap,
-      title: 'Automation',
-      description: 'Streamlining workflows and processes with automation tools, CI/CD pipelines, and intelligent task management.',
-      features: ['CI/CD Pipelines', 'Business Process Automation', 'Time-Saving Workflows'],
-      link: '/services/automation'
-    },
-    {
-      icon: Smartphone,
-      title: 'SEO Optimization',
-      description: 'Boost your online visibility with cutting-edge SEO techniques designed to improve rankings and attract organic traffic.',
-      features: ['On-Page SEO', 'Technical SEO', 'Keyword Optimization'],
-      link: '/services/seo'
-    },
-    {
-      icon: Database,
-      title: 'Data Intelligence',
-      description: 'Transform raw data into valuable insights using advanced analytics, machine learning, and reporting tools.',
-      features: ['Data Analytics', 'Predictive Insights', 'Business Dashboards'],
-      link: '/services/data-intelligence'
-    },
-    {
-      icon: Shield,
-      title: 'Cybersecurity',
-      description: 'Protect your business from digital threats with advanced security measures and compliance-driven practices.',
-      features: ['Penetration Testing', 'Data Encryption', 'Threat Monitoring'],
-      link: '/services/cybersecurity'
-    }
-  ];
-
   return (
-    <section id="services" className="py-20 bg-gray-50">
+    <section id="services" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Services</h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            We offer comprehensive technology solutions to help your business thrive in the digital age
-          </p>
-        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] gap-12 items-start">
+          <div className="lg:sticky lg:top-28">
+            <span className="text-blue-600 font-semibold uppercase tracking-wide text-sm">
+              Services
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-3 mb-5">
+              Practical digital support for serious growth
+            </h2>
+            <p className="text-lg text-gray-600 leading-relaxed mb-8">
+              EmmaTech helps businesses design, build, improve, and support the
+              systems they need to work better online.
+            </p>
+            <Link
+              to="/service"
+              className="inline-flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-800 transition-colors"
+            >
+              View all services
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => {
-            const IconComponent = service.icon;
-            return (
-              <div
-                key={index}
-                className="group bg-white rounded-xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-100"
-              >
-                <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-teal-600 rounded-lg mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <IconComponent className="h-8 w-8 text-white" />
-                </div>
-                
-                <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors">
-                  {service.title}
-                </h3>
-                
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  {service.description}
-                </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            {services.map((service, index) => {
+              const Icon = service.icon;
+              const isLastOdd = index === services.length - 1;
 
-                <ul className="space-y-2">
-                  {service.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-center text-gray-700">
-                      <div className="w-2 h-2 bg-blue-600 rounded-full mr-3" />
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-
-                <a
-                  href={service.link}
-                  className="mt-6 inline-flex items-center text-blue-600 font-semibold group-hover:text-blue-800 transition-colors"
+              return (
+                <Link
+                  key={service.title}
+                  to={service.link}
+                  className={`group bg-gray-50 border border-gray-100 p-6 shadow-sm hover:bg-white hover:border-blue-200 hover:shadow-lg transition-all duration-300 ${
+                    isLastOdd ? "sm:col-span-2 lg:col-span-1" : ""
+                  }`}
                 >
-                  Learn More
-                  <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </a>
-              </div>
-            );
-          })}
+                  <div className="w-12 h-12 bg-blue-600 text-white flex items-center justify-center mb-6 group-hover:bg-slate-950 transition-colors">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed mb-6">
+                    {service.description}
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-sm font-semibold text-blue-600">
+                    Learn more
+                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

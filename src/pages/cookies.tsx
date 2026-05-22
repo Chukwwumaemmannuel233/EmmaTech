@@ -1,174 +1,202 @@
 import { motion } from "framer-motion";
-import { Cookie, Lock, Settings, Globe, Info, Shield, UserCheck } from "lucide-react";
+import { Link } from "react-router-dom";
+import {
+  ArrowRight,
+  BarChart3,
+  CheckCircle2,
+  Cookie,
+  FileText,
+  Globe,
+  Mail,
+  Settings,
+  ShieldCheck,
+} from "lucide-react";
 
-const cookiesSections = [
+const cookieTypes = [
   {
-    title: "Introduction",
-    description: `This Cookies Policy explains how our website uses cookies and similar technologies to provide you with a better browsing experience.`,
-    icon: Cookie,
-    image:
-      "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=600&q=80",
+    icon: ShieldCheck,
+    title: "Essential Cookies",
+    text: "These help the website load correctly, keep forms stable, and support basic security.",
   },
   {
-    title: "What Are Cookies?",
-    description: `Cookies are small text files placed on your device to store information. They help us remember your preferences and improve website functionality.`,
-    icon: Info,
-    image:
-      "https://images.unsplash.com/photo-1506619216599-9d16d0903dfd?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    title: "Types of Cookies We Use",
-    description: `We use essential, performance, functional, and advertising cookies. Each type serves a specific purpose to enhance your user experience.`,
     icon: Settings,
-    image:
-      "https://images.unsplash.com/photo-1605902711622-cfb43c4437b5?auto=format&fit=crop&w=600&q=80",
+    title: "Preference Cookies",
+    text: "These may remember choices such as display settings or saved preferences if we add them.",
   },
   {
-    title: "Why We Use Cookies",
-    description: `Cookies help us provide secure logins, save preferences, analyze website traffic, and show you relevant content. Without them, many features wouldn’t work properly.`,
-    icon: Shield,
-    image:
-      "https://images.unsplash.com/photo-1525186402429-b4ff38bedbec?auto=format&fit=crop&w=600&q=80",
+    icon: BarChart3,
+    title: "Analytics Cookies",
+    text: "These help us understand which pages visitors use so we can improve the website.",
   },
   {
-    title: "Managing Cookies",
-    description: `You can manage or disable cookies via your browser settings. Please note that disabling certain cookies may affect site functionality.`,
-    icon: Lock,
-    image:
-      "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&w=600&q=80",
-  },
-  {
-    title: "Third-Party Cookies",
-    description: `Some cookies are set by third-party services like analytics and ads providers. These cookies follow their own privacy practices.`,
     icon: Globe,
-    image:
-      "https://media.istockphoto.com/id/1202363571/photo/cookies-with-a-tablet-to-clarify-cookie-banners-for-websites-with-third-party-cookies.jpg?s=612x612&w=0&k=20&c=jY5PbFb859nsTD2TiboRcUV-op_Vegkt9bCCH7_NoBI=",
+    title: "Third-Party Cookies",
+    text: "Some embedded tools or external services may set their own cookies under their own policies.",
   },
-  {
-    title: "Your Rights & Choices",
-    description: `You can accept, refuse, or delete cookies at any time. We respect your privacy preferences and provide tools to help you manage them.`,
-    icon: UserCheck,
-    image:
-      "https://media.istockphoto.com/id/637939370/photo/creative-colleagues-reviewing-ideas-on-wall-in-studio-office.jpg?s=612x612&w=0&k=20&c=rxIQzDuib-Fcnw5vm5Nu4p_t3xB6gItyzsD_FkzPK6c=",
-  },
-  {
-    title: "Policy Updates",
-    description: `We may update this Cookies Policy from time to time. Any changes will be posted on this page with an updated date.`,
-    icon: Info,
-    image:
-      "https://media.istockphoto.com/id/2152142980/photo/policies-update-text-on-wooden-block.jpg?s=612x612&w=0&k=20&c=n7Grt5SZoMsymElRE841etm81M1BSc1FJnmOB5NSkXI=",
-  },
+];
+
+const howItWorks = [
+  "Your browser visits the website",
+  "The website may save a small text file",
+  "Your browser sends it back on later visits",
+  "The site uses it to remember or measure something",
+];
+
+const choices = [
+  "Block or delete cookies in your browser settings",
+  "Use private browsing when you do not want cookies saved",
+  "Clear existing cookies from your device",
+  "Contact us if you have questions about website tracking",
 ];
 
 export default function CookiesPolicyPage() {
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-800">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-indigo-600 via-purple-700 to-indigo-500 text-white py-20 text-center">
-        <motion.h1
-          initial={{ y: -30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="text-4xl md:text-5xl font-bold mb-4"
-        >
-          Cookies Policy
-        </motion.h1>
-        <motion.p
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-lg md:text-xl max-w-2xl mx-auto opacity-90"
-        >
-          Learn how we use cookies to improve your browsing experience, personalize content, and secure your data.
-        </motion.p>
-      </section>
+    <main className="min-h-screen bg-white text-gray-900">
+      <section className="relative pt-32 pb-20 bg-gray-950 text-white overflow-hidden">
+        <img
+          src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=1600&q=80"
+          alt="Website settings and security"
+          className="absolute inset-0 w-full h-full object-cover opacity-20"
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-950 via-blue-950/90 to-teal-900/75" />
 
-      {/* Cookies Sections */}
-      <section className="py-20 max-w-6xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-12">
-          {cookiesSections.map((section, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-2xl shadow-lg p-6 flex flex-col md:flex-row items-center gap-6 hover:shadow-xl transition-shadow duration-300"
-            >
-              <section.icon className="h-12 w-12 text-indigo-600 flex-shrink-0" />
-              <div className="flex-1">
-                <h3 className="font-semibold text-xl mb-2">{section.title}</h3>
-                <p className="text-gray-600">{section.description}</p>
-              </div>
-              <motion.img
-                initial={{ scale: 0.9, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                src={section.image}
-                alt={section.title}
-                className="w-32 h-20 object-cover rounded-lg shadow-md"
-              />
-            </motion.div>
-          ))}
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-4xl"
+          >
+            <span className="text-blue-300 font-semibold uppercase tracking-wide text-sm">
+              Cookie Policy
+            </span>
+            <h1 className="text-4xl md:text-6xl font-bold mt-4 mb-6">
+              How cookies may work on EmmaTech's website
+            </h1>
+            <p className="text-lg md:text-xl text-blue-100 leading-relaxed">
+              This page explains the small browser files that may help our
+              website work properly, understand visits, and improve the user
+              experience.
+            </p>
+            <p className="text-sm text-blue-200 mt-6">
+              Last updated: May 22, 2026
+            </p>
+          </motion.div>
         </div>
       </section>
 
-      {/* Conclusion Section */}
-      <section className="py-20 max-w-4xl mx-auto px-6 text-center">
-        <motion.h2
-          initial={{ y: 20, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="text-3xl font-bold mb-6 text-gray-900"
-        >
-          Stay in Control of Your Preferences
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-gray-700 mb-4"
-        >
-          You can review and manage your cookie preferences anytime to ensure your browsing experience aligns with your privacy choices.
-        </motion.p>
-        <motion.img
-          initial={{ scale: 0.9, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          src="https://media.istockphoto.com/id/1448252020/photo/cakes-for-sale.jpg?s=612x612&w=0&k=20&c=l_3eZqgj9WJied-jckkSAQdKzP1jdlIZlTVkNpRJO-M="
-          alt="Cookies Illustration"
-          className="mt-6 mx-auto rounded-xl shadow-lg w-96"
-        />
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-[0.75fr_1.25fr] gap-10">
+          <aside>
+            <div className="bg-white border border-gray-100 shadow-sm p-6 sticky top-24">
+              <Cookie className="h-9 w-9 text-blue-600 mb-5" />
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">
+                A simple cookie note
+              </h2>
+              <p className="text-gray-600 leading-relaxed">
+                EmmaTech is a service company website. Cookies here are mainly
+                about basic functionality, preferences, and understanding how
+                visitors use the site.
+              </p>
+            </div>
+          </aside>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {cookieTypes.map((section, index) => {
+              const Icon = section.icon;
+
+              return (
+                <motion.article
+                  key={section.title}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.45, delay: index * 0.04 }}
+                  className="bg-white border border-gray-100 p-6 shadow-sm"
+                >
+                  <div className="w-12 h-12 bg-blue-600 text-white flex items-center justify-center mb-5">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    {section.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">
+                    {section.text}
+                  </p>
+                </motion.article>
+              );
+            })}
+          </div>
+        </div>
       </section>
 
-      {/* Contact / Support Section */}
-      <section className="py-20 bg-gradient-to-r from-indigo-600 via-purple-700 to-indigo-500 text-white text-center">
-        <motion.h2
-          initial={{ y: 20, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.8 }}
-          className="text-3xl font-bold mb-6"
-        >
-          Need Help Managing Cookies?
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mb-6 max-w-xl mx-auto"
-        >
-          If you have questions or need help with cookie settings, our support team is here for you. We’ll make sure you stay in control of your data.
-        </motion.p>
-        <motion.a
-          initial={{ scale: 0.9, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          href="/support"
-          className="inline-block bg-white text-indigo-600 font-semibold px-6 py-3 rounded-full shadow-lg hover:bg-gray-100 transition-colors duration-300"
-        >
-          Contact Support
-        </motion.a>
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+          <div>
+            <span className="text-blue-600 font-semibold uppercase tracking-wide text-sm">
+              How Cookies Work
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-3 mb-5">
+              Small files, simple purpose
+            </h2>
+            <p className="text-lg text-gray-600 leading-relaxed">
+              A cookie is a small text file saved by your browser. It can help a
+              website remember a visit, keep a setting, or measure basic usage.
+            </p>
+          </div>
+
+          <div className="bg-gray-50 border border-gray-100 p-6">
+            <div className="space-y-4">
+              {howItWorks.map((item, index) => (
+                <div key={item} className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-blue-600 text-white flex items-center justify-center font-semibold text-sm">
+                    {index + 1}
+                  </div>
+                  <span className="text-gray-700 pt-1">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
-    </div>
+
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+          <div className="bg-white border border-gray-100 shadow-sm p-8">
+            <FileText className="h-9 w-9 text-blue-600 mb-5" />
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              Your Choices
+            </h2>
+            <div className="space-y-4">
+              {choices.map((choice) => (
+                <div key={choice} className="flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-blue-600 mt-0.5" />
+                  <span className="text-gray-700">{choice}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-white border border-gray-100 shadow-sm p-8">
+            <Mail className="h-9 w-9 text-blue-600 mb-5" />
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              Questions about cookies?
+            </h2>
+            <p className="text-gray-600 leading-relaxed mb-6">
+              If you want to understand how cookies, analytics, or browser
+              storage may apply to this website, contact us and we will keep the
+              answer clear.
+            </p>
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+            >
+              Contact EmmaTech
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }

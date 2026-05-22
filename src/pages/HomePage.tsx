@@ -4,6 +4,7 @@ import Hero from "../components/Hero";
 import Services from "../components/Services";
 import About from "../components/About";
 import Portfolio from "../components/Portfolio";
+import TrustSections from "../components/TrustSections";
 // import Team from "../components/Team";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
@@ -51,6 +52,16 @@ export default function HomePage() {
         whileInView="visible"
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.4 }}
+        variants={fadeInUp}
+      >
+        <TrustSections />
+      </motion.div>
+
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        transition={{ duration: 0.6, delay: 0.5 }}
         variants={fadeInUp}
       >
         <Portfolio />

@@ -1,358 +1,257 @@
-// ServicesPage.tsx
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
-  Code,
-  Cloud,
-  Workflow,
-  BarChart3,
-  Monitor,
+  ArrowRight,
+  CheckCircle2,
+  Code2,
+  Headphones,
+  MessageSquare,
   Palette,
-  ShieldCheck,
   Search,
-  Users,
 } from "lucide-react";
 
 const services = [
   {
     name: "Software Development",
     to: "/services/software-development",
-    icon: <Code className="w-10 h-10 text-blue-500" />,
+    icon: Code2,
     description:
-      "Custom web and mobile applications built to meet your business goals. We use modern frameworks and agile practices to deliver reliable software.",
+      "Custom software, web applications, and digital tools built around your workflow.",
+    features: ["Web applications", "Custom business tools", "API integration"],
     image:
       "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80",
   },
   {
-    name: "Cloud Infrastructure",
-    to: "/services/cloud",
-    icon: <Cloud className="w-10 h-10 text-indigo-500" />,
-    description:
-      "Secure, scalable, and cost-efficient cloud solutions. We help businesses migrate, manage, and optimize cloud infrastructure.",
-    image:
-      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
-    name: "Automation",
-    to: "/services/automation",
-    icon: <Workflow className="w-10 h-10 text-green-500" />,
-    description:
-      "Save time and reduce errors by automating workflows and repetitive processes with smart tools and integrations.",
-    image:
-      "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzF8fGF1dG9tYXRpb258ZW58MHx8MHx8fDA%3D",
-  },
-  {
-    name: "Data Intelligence",
-    to: "/services/data",
-    icon: <BarChart3 className="w-10 h-10 text-orange-500" />,
-    description:
-      "Turn raw data into insights. From dashboards to predictive analytics, we help businesses make smarter decisions.",
-    image:
-      "https://images.unsplash.com/photo-1556155092-490a1ba16284?auto=format&fit=crop&w=1200&q=80",
-  },
-  {
     name: "Managed IT Services",
-    to: "/services/it",
-    icon: <Monitor className="w-10 h-10 text-purple-500" />,
+    to: "/services/managed-it-services",
+    icon: Headphones,
     description:
-      "End-to-end IT support including monitoring, troubleshooting, and system optimization — available 24/7.",
+      "Reliable support and technical management for smoother business operations.",
+    features: ["Technical support", "System maintenance", "Issue resolution"],
     image:
       "https://media.istockphoto.com/id/2195093158/photo/data-center.webp?a=1&b=1&s=612x612&w=0&k=20&c=xTB7b-o70b5LVdTG6aQ4YRULzkRwKEYvwWB3bI6imH4=",
   },
   {
     name: "UI/UX Design",
-    to: "/services/uiux",
-    icon: <Palette className="w-10 h-10 text-pink-500" />,
+    to: "/services/uiux-design",
+    icon: Palette,
     description:
-      "User-centered design that delivers engaging, intuitive, and consistent digital experiences across all platforms.",
+      "Clean, user-friendly interfaces that make your product easier to use and trust.",
+    features: ["Product design", "User experience", "Interface design"],
     image:
       "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80",
   },
   {
-    name: "Cybersecurity",
-    to: "/services/cybersecurity",
-    icon: <ShieldCheck className="w-10 h-10 text-red-500" />,
-    description:
-      "Protect your organization from cyber threats with proactive monitoring, audits, and compliance solutions.",
-    image:
-      "https://plus.unsplash.com/premium_photo-1661877737564-3dfd7282efcb?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y3liZXJzZWN1cml0eXxlbnwwfHwwfHx8MA%3D%3D",
-  },
-  {
     name: "SEO Optimization",
     to: "/services/seo",
-    icon: <Search className="w-10 h-10 text-teal-500" />,
+    icon: Search,
     description:
-      "Increase your visibility and reach with data-driven SEO strategies designed to drive traffic and conversions.",
+      "Search improvements that help your website become easier to find and understand.",
+    features: ["Technical SEO", "On-page SEO", "Keyword optimization"],
     image:
       "https://plus.unsplash.com/premium_photo-1683578888262-22a112723a83?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fFNFTyUyME9wdGltaXphdGlvbnxlbnwwfHwwfHx8MA%3D%3D",
   },
   {
     name: "Consulting",
     to: "/services/consulting",
-    icon: <Users className="w-10 h-10 text-yellow-500" />,
+    icon: MessageSquare,
     description:
-      "Guidance and expertise to help you choose the right technologies and digital strategies for your business.",
+      "Practical technology guidance for planning, improving, and scaling digital products.",
+    features: ["Project planning", "Tech advisory", "Digital strategy"],
     image:
       "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=80",
   },
 ];
 
+const process = [
+  {
+    title: "Understand",
+    text: "We clarify your goal, users, budget, and current challenges.",
+  },
+  {
+    title: "Plan",
+    text: "We define the right scope, timeline, tools, and delivery path.",
+  },
+  {
+    title: "Build",
+    text: "We design, develop, review, and refine with clear communication.",
+  },
+  {
+    title: "Support",
+    text: "We help you improve, maintain, and move forward after launch.",
+  },
+];
+
 export default function ServicesPage() {
   return (
-    <motion.div
+    <motion.main
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="min-h-screen bg-gray-50"
+      className="min-h-screen bg-white"
     >
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-indigo-600 via-purple-700 to-indigo-500 text-white py-20">
-        <motion.div
-          className="max-w-4xl mx-auto px-6 text-center"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <motion.h1
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl md:text-5xl font-bold"
-          >
-            Our Services
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="mt-6 text-lg md:text-xl opacity-95 leading-relaxed"
-          >
-            At <span className="font-semibold">Your Company</span>, we don’t just
-            deliver projects — we build long-term digital solutions. From software
-            development to cloud optimization, every service is designed to help
-            your business scale, adapt, and thrive.
-          </motion.p>
-        </motion.div>
-      </section>
-
-      {/* Featured Services with Overlay Text */}
-      <section className="py-20 max-w-6xl mx-auto px-6 md:px-20 grid md:grid-cols-2 gap-8">
-        <motion.div
-          className="relative rounded-2xl overflow-hidden shadow-lg"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <img
-            src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1200&q=80"
-            alt="Software Development"
-            className="w-full h-96 object-cover"
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-start p-6">
-            <motion.h3
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-3xl font-bold text-white mb-2"
-            >
-              Software Development
-            </motion.h3>
-            <motion.p
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-white text-lg opacity-90"
-            >
-              We build custom web and mobile applications that meet your business
-              needs and enhance productivity.
-            </motion.p>
-          </div>
-        </motion.div>
-
-        <motion.div
-          className="relative rounded-2xl overflow-hidden shadow-lg"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          <img
-            src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzF8fGF1dG9tYXRpb258ZW58MHx8MHx8fDA%3D"
-            alt="Automation & Cloud"
-            className="w-full h-96 object-cover"
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-start p-6">
-            <motion.h3
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-3xl font-bold text-white mb-2"
-            >
-              Automation & Cloud
-            </motion.h3>
-            <motion.p
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-white text-lg opacity-90"
-            >
-              Streamline workflows, reduce errors, and scale your business with
-              smart automation and cloud solutions.
-            </motion.p>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Services Grid */}
-      <section className="py-16 px-6 md:px-20">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((service, index) => (
-            <motion.article
-              key={service.name}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.06, duration: 0.45 }}
-              className="bg-white rounded-2xl shadow-md hover:shadow-xl transition p-6 flex flex-col"
-            >
-              <motion.img
-                src={service.image}
-                alt={service.name}
-                className="w-full h-44 object-cover rounded-xl mb-4"
-                loading="lazy"
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.6 }}
-              />
-              <div className="flex items-center gap-3 mb-3">
-                {service.icon}
-                <motion.h2
-                  className="text-xl font-semibold text-gray-900"
-                  initial={{ opacity: 0, x: -10 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  {service.name}
-                </motion.h2>
-              </div>
-              <motion.p
-                className="text-gray-600 flex-grow leading-relaxed"
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-              >
-                {service.description}
-              </motion.p>
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-              >
-                <Link
-                  to={service.to}
-                  className="mt-4 inline-block text-indigo-600 font-medium hover:underline"
-                >
-                  Learn More →
-                </Link>
-              </motion.div>
-            </motion.article>
-          ))}
-        </div>
-      </section>
-
-      {/* How We Deliver Section */}
-      <section className="py-20 max-w-5xl mx-auto text-center px-6">
-        <motion.h2
-          className="text-3xl font-bold text-gray-900 mb-6"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          How We Deliver Results
-        </motion.h2>
-        <motion.p
-          className="text-gray-700 text-lg leading-relaxed mb-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          Every project follows a proven delivery model focused on reducing risk
-          and delivering measurable outcomes. We combine discovery, iterative
-          delivery, and operations to make sure your product performs in the
-          real world.
-        </motion.p>
-
-        <div className="grid gap-8 md:grid-cols-4 text-left">
-          {["Discovery", "Planning", "Delivery", "Support"].map((title, i) => (
+      <section className="relative pt-32 pb-20 bg-gray-950 text-white overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/70 via-gray-950 to-teal-900/60" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.8fr] gap-12 items-center">
             <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.06 }}
-              className="bg-white rounded-2xl p-6 shadow"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
             >
-              <h3 className="font-semibold text-xl mb-2">{title}</h3>
-              <p className="text-gray-600">
-                {title === "Discovery" &&
-                  "We align with stakeholders, map user journeys, and identify success metrics."}
-                {title === "Planning" &&
-                  "We define milestones, risks, and timelines — and create a roadmap built around delivering validated value quickly."}
-                {title === "Delivery" &&
-                  "We iterate in short cycles, ship incremental value, and keep close collaboration with your team for rapid feedback."}
-                {title === "Support" &&
-                  "After launch we provide monitoring, security hardening, and continuous improvements."}
+              <span className="text-blue-300 font-semibold uppercase tracking-wide text-sm">
+                Services
+              </span>
+              <h1 className="text-4xl md:text-6xl font-bold mt-4 mb-6">
+                Digital services built for real business needs
+              </h1>
+              <p className="text-lg md:text-xl text-gray-300 leading-relaxed max-w-3xl">
+                EmmaTech helps teams plan, design, build, improve, and support
+                reliable digital solutions without unnecessary complexity.
               </p>
+              <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                <Link
+                  to="/get-a-quote"
+                  className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                >
+                  Get a Free Quote
+                  <ArrowRight className="h-5 w-5" />
+                </Link>
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center justify-center gap-2 border border-white/25 hover:border-white text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+                >
+                  Contact Us
+                </Link>
+              </div>
             </motion.div>
-          ))}
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              className="bg-white/10 border border-white/10 p-6 backdrop-blur"
+            >
+              <p className="text-blue-200 font-semibold mb-5">
+                Main capabilities
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {services.map((service) => (
+                  <Link
+                    key={service.name}
+                    to={service.to}
+                    className="flex items-center gap-3 bg-white/8 hover:bg-white/14 border border-white/10 p-4 transition-colors"
+                  >
+                    <service.icon className="h-5 w-5 text-blue-300" />
+                    <span className="font-semibold">{service.name}</span>
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="bg-gradient-to-r from-indigo-600 via-purple-700 to-indigo-500 text-white py-20">
-        <motion.div
-          className="max-w-3xl mx-auto px-6 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <motion.h2
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-3xl md:text-4xl font-bold mb-4"
-          >
-            Ready to Transform Your Business?
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.12 }}
-            className="max-w-2xl mx-auto text-lg mb-6 opacity-95"
-          >
-            Let’s work together to create powerful digital solutions that help you
-            grow, scale, and succeed in today’s fast-changing world.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <Link
-              to="/contact"
-              className="inline-block bg-white text-indigo-700 font-semibold px-8 py-3 rounded-full shadow hover:bg-gray-100 transition"
-            >
-              Get in Touch
-            </Link>
-          </motion.div>
-        </motion.div>
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl mb-12">
+            <span className="text-blue-600 font-semibold uppercase tracking-wide text-sm">
+              What We Offer
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-3 mb-4">
+              Focused services for growing teams
+            </h2>
+            <p className="text-lg text-gray-600">
+              Choose the service that matches your current business priority.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {services.map((service, index) => (
+              <motion.article
+                key={service.name}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45, delay: index * 0.05 }}
+                className="group bg-white border border-gray-100 shadow-sm overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+              >
+                <img
+                  src={service.image}
+                  alt={service.name}
+                  className="w-full h-48 object-cover"
+                  loading="lazy"
+                />
+                <div className="p-6">
+                  <div className="w-12 h-12 bg-blue-600 text-white flex items-center justify-center mb-5 group-hover:bg-gray-950 transition-colors">
+                    <service.icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    {service.name}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed mb-5">
+                    {service.description}
+                  </p>
+                  <ul className="space-y-2 mb-6">
+                    {service.features.map((feature) => (
+                      <li
+                        key={feature}
+                        className="flex items-center gap-2 text-sm text-gray-700"
+                      >
+                        <CheckCircle2 className="h-4 w-4 text-blue-600" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    to={service.to}
+                    className="inline-flex items-center gap-2 text-blue-600 font-semibold"
+                  >
+                    More Info
+                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
       </section>
-    </motion.div>
+
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-10 items-start">
+            <div>
+              <span className="text-blue-600 font-semibold uppercase tracking-wide text-sm">
+                Our Process
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-3 mb-4">
+                Simple, clear, and collaborative
+              </h2>
+              <p className="text-lg text-gray-600">
+                We keep delivery practical so you always know what is happening,
+                why it matters, and what comes next.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {process.map((step, index) => (
+                <div
+                  key={step.title}
+                  className="border border-gray-100 bg-gray-50 p-6"
+                >
+                  <div className="text-blue-600 font-bold text-sm mb-4">
+                    0{index + 1}
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
+                    {step.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed">{step.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </motion.main>
   );
 }
