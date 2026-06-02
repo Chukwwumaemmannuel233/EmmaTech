@@ -8,6 +8,7 @@ import {
   X,
 } from "lucide-react";
 import { toast } from "sonner";
+import { apiRequest } from "../lib/api";
 
 const initialQuoteData = {
   name: "",
@@ -17,7 +18,7 @@ const initialQuoteData = {
   service: "",
   budget: "",
   timeline: "",
-  message: "",
+  projectDescription: "",
 };
 
 const services = [
@@ -31,6 +32,7 @@ const services = [
 const GetAQuotePage: React.FC = () => {
   const [formData, setFormData] = useState(initialQuoteData);
   const [projectFile, setProjectFile] = useState<File | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -43,14 +45,14 @@ const GetAQuotePage: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const requiredFields = [
       formData.name,
       formData.email,
       formData.service,
-      formData.message,
+      formData.projectDescription,
     ];
 
     if (requiredFields.some((field) => !field.trim())) {
@@ -63,21 +65,38 @@ const GetAQuotePage: React.FC = () => {
       return;
     }
 
-    console.log("Quote request:", {
-      ...formData,
-      file: projectFile
-        ? {
-            name: projectFile.name,
-            size: projectFile.size,
-            type: projectFile.type,
-          }
-        : null,
-    });
-    toast.success("Quote request sent", {
-      description: "We will review it shortly.",
-    });
-    setFormData(initialQuoteData);
-    setProjectFile(null);
+    const quoteData = new FormData();
+    quoteData.append("name", formData.name.trim());
+    quoteData.append("email", formData.email.trim());
+    quoteData.append("phone", formData.phone.trim());
+    quoteData.append("company", formData.company.trim());
+    quoteData.append("service", formData.service);
+    quoteData.append("budget", formData.budget);
+    quoteData.append("timeline", formData.timeline);
+    quoteData.append("projectDescription", formData.projectDescription.trim());
+
+    if (projectFile) {
+      quoteData.append("file", projectFile);
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      await apiRequest("/api/quotes", {
+        method: "POST",
+        body: quoteData,
+      });
+
+      toast.success("Quote request sent", {
+        description: "We will review it shortly.",
+      });
+      setFormData(initialQuoteData);
+      setProjectFile(null);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Request failed");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,9 +108,17 @@ const GetAQuotePage: React.FC = () => {
     }
 
     const maxSize = 10 * 1024 * 1024;
+    const allowedExtensions = ["pdf", "doc", "docx", "png", "jpg", "jpeg", "zip"];
+    const extension = file.name.split(".").pop()?.toLowerCase();
 
     if (file.size > maxSize) {
       toast.error("File must be 10MB or less.");
+      e.target.value = "";
+      return;
+    }
+
+    if (!extension || !allowedExtensions.includes(extension)) {
+      toast.error("Allowed files: pdf, doc, docx, png, jpg, jpeg, zip.");
       e.target.value = "";
       return;
     }
@@ -231,8 +258,8 @@ const GetAQuotePage: React.FC = () => {
             </div>
 
             <textarea
-              name="message"
-              value={formData.message}
+              name="projectDescription"
+              value={formData.projectDescription}
               onChange={handleChange}
               rows={6}
               placeholder="Tell us about the project *"
@@ -258,7 +285,7 @@ const GetAQuotePage: React.FC = () => {
                     type="file"
                     onChange={handleFileChange}
                     className="sr-only"
-                    accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.webp,.txt"
+                    accept=".pdf,.doc,.docx,.png,.jpg,.jpeg,.zip"
                   />
                 </label>
               </div>
@@ -287,9 +314,10 @@ const GetAQuotePage: React.FC = () => {
 
             <button
               type="submit"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition-colors"
+              disabled={isSubmitting}
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:hover:bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold transition-colors"
             >
-              Send Quote Request
+              {isSubmitting ? "Sending..." : "Send Quote Request"}
               <ArrowRight className="h-5 w-5" />
             </button>
           </form>

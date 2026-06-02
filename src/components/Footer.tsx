@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Linkedin,
@@ -6,6 +6,8 @@ import {
   MapPin,
   Phone,
 } from "lucide-react";
+import { toast } from "sonner";
+import { apiRequest } from "../lib/api";
 
 type SocialIconProps = {
   className?: string;
@@ -35,6 +37,35 @@ const XIcon = ({ className }: SocialIconProps) => (
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [isSubscribing, setIsSubscribing] = useState(false);
+
+  const submitNewsletter = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if (!/^\S+@\S+\.\S+$/.test(newsletterEmail.trim())) {
+      toast.error("Please enter a valid email.");
+      return;
+    }
+
+    setIsSubscribing(true);
+
+    try {
+      await apiRequest("/api/newsletter/subscribe", {
+        method: "POST",
+        body: JSON.stringify({ email: newsletterEmail.trim() }),
+      });
+
+      toast.success("Subscribed", {
+        description: "You are now on the EmmaTech update list.",
+      });
+      setNewsletterEmail("");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Request failed");
+    } finally {
+      setIsSubscribing(false);
+    }
+  };
 
   const footerLinks = {
     services: [
@@ -49,6 +80,7 @@ const Footer: React.FC = () => {
       { name: "Team", path: "/team" },
       { name: "Careers", path: "/career" },
       { name: "Contact", path: "/contact" },
+      { name: "Admin", path: "/admin" },
     ],
   };
 
@@ -171,6 +203,32 @@ const Footer: React.FC = () => {
                 );
               })}
             </div>
+
+            <form onSubmit={submitNewsletter} className="mt-7">
+              <label
+                htmlFor="newsletter-email"
+                className="block text-sm font-semibold text-gray-200 mb-3"
+              >
+                Newsletter
+              </label>
+              <div className="flex gap-2">
+                <input
+                  id="newsletter-email"
+                  type="email"
+                  value={newsletterEmail}
+                  onChange={(event) => setNewsletterEmail(event.target.value)}
+                  placeholder="Email address"
+                  className="min-w-0 flex-1 border border-gray-700 bg-gray-950 px-3 py-2 text-sm text-white outline-none focus:border-blue-400"
+                />
+                <button
+                  type="submit"
+                  disabled={isSubscribing}
+                  className="bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-blue-700 disabled:opacity-60 disabled:hover:bg-blue-600"
+                >
+                  {isSubscribing ? "..." : "Join"}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

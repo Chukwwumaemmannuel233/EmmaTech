@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  ArrowRight,
   CheckCircle2,
   Clock,
   Mail,
@@ -9,6 +8,7 @@ import {
   Send,
 } from "lucide-react";
 import { toast } from "sonner";
+import { apiRequest } from "../lib/api";
 
 const initialFormData = {
   name: "",
@@ -19,6 +19,7 @@ const initialFormData = {
 
 const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState(initialFormData);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -31,7 +32,7 @@ const ContactPage: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const requiredFields = [
@@ -51,11 +52,28 @@ const ContactPage: React.FC = () => {
       return;
     }
 
-    console.log("Form submitted:", formData);
-    toast.success("Message sent", {
-      description: "We will get back to you soon.",
-    });
-    setFormData(initialFormData);
+    setIsSubmitting(true);
+
+    try {
+      await apiRequest("/api/contact", {
+        method: "POST",
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          subject: formData.subject.trim(),
+          message: formData.message.trim(),
+        }),
+      });
+
+      toast.success("Message sent", {
+        description: "We will get back to you soon.",
+      });
+      setFormData(initialFormData);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Request failed");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -269,10 +287,11 @@ const ContactPage: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors"
+                  disabled={isSubmitting}
+                  className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:hover:bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold flex items-center justify-center gap-2 transition-colors"
                 >
                   <Send className="h-5 w-5" />
-                  Send Message
+                  {isSubmitting ? "Sending..." : "Send Message"}
                 </button>
 
                 <p className="text-sm text-gray-600 text-center">

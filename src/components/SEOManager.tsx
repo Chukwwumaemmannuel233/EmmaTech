@@ -108,6 +108,20 @@ const pageSeo: Record<string, PageSeo> = {
     description:
       "Learn how cookies may work on the EmmaTech website and how visitors can manage browser cookie preferences.",
   },
+  "/admin": {
+    title: "Admin | EmmaTech",
+    description:
+      "EmmaTech admin area for managing contacts, quotes, bookings, and support requests.",
+  },
+  "/admin/login": {
+    title: "Admin Login | EmmaTech",
+    description: "Secure EmmaTech admin login.",
+  },
+  "/admin/dashboard": {
+    title: "Admin Dashboard | EmmaTech",
+    description:
+      "EmmaTech admin dashboard for managing contacts, quotes, bookings, and support requests.",
+  },
 };
 
 const upsertMeta = (selector: string, create: () => HTMLMetaElement) => {
@@ -205,6 +219,14 @@ const SEOManager = () => {
       meta.name = "keywords";
       return meta;
     }).content = seo.keywords || "EmmaTech, software development, IT support, UI UX design, SEO, consulting";
+
+    upsertMeta('meta[name="robots"]', () => {
+      const meta = document.createElement("meta");
+      meta.name = "robots";
+      return meta;
+    }).content = pathname.startsWith("/admin")
+      ? "noindex, nofollow"
+      : "index, follow";
 
     upsertMeta('meta[property="og:title"]', () => {
       const meta = document.createElement("meta");

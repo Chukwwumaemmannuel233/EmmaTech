@@ -61,21 +61,6 @@ const Hero: React.FC = () => {
               <span className="font-semibold">Explore Solutions</span>
             </a>
           </div>
-
-          {/* <div className="mt-16 grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
-              <div className="text-3xl font-bold text-white mb-2">150+</div>
-              <div className="text-blue-200">Projects Completed</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
-              <div className="text-3xl font-bold text-white mb-2">98%</div>
-              <div className="text-blue-200">Client Satisfaction</div>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
-              <div className="text-3xl font-bold text-white mb-2">24/7</div>
-              <div className="text-blue-200">Support Available</div>
-            </div>
-          </div> */}
         </div>
       </div>
 

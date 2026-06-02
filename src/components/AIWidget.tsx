@@ -20,6 +20,7 @@ import {
   UserRound,
   X,
 } from "lucide-react";
+import { apiRequest } from "../lib/api";
 
 type WidgetView = "home" | "chat" | "schedule";
 
@@ -91,6 +92,13 @@ const formatDateLabel = (date: Date | null) => {
     day: "numeric",
     year: "numeric",
   });
+};
+
+const formatApiDate = (date: Date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 };
 
 const isSameDate = (first: Date, second: Date) =>
@@ -217,6 +225,8 @@ export default function AIWidgetOnly() {
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState("");
   const [bookingForm, setBookingForm] = useState(initialBookingForm);
+  const [isBookingSubmitting, setIsBookingSubmitting] = useState(false);
+  const [bookingNotice, setBookingNotice] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLElement>(null);
   const launcherRef = useRef<HTMLButtonElement>(null);
@@ -308,10 +318,11 @@ export default function AIWidgetOnly() {
     }));
   };
 
-  const submitBooking = (e: React.FormEvent) => {
+  const submitBooking = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!selectedDate || !selectedTime) {
+      setBookingNotice("Choose an available weekday date and time.");
       toast.error("Choose a date and time.");
       return;
     }
@@ -326,24 +337,45 @@ export default function AIWidgetOnly() {
       return;
     }
 
-    toast.success("Call request sent", {
-      description: "We will confirm your meeting soon.",
-    });
+    setIsBookingSubmitting(true);
 
-    setMessages((current) => [
-      ...current,
-      {
-        id: `${Date.now()}-booking`,
-        from: "assistant",
-        text: `Your call request is noted for ${formatDateLabel(selectedDate)} at ${selectedTime}. EmmaTech will confirm by email.`,
-        timestamp: new Date(),
-      },
-    ]);
+    try {
+      await apiRequest("/api/bookings", {
+        method: "POST",
+        body: JSON.stringify({
+          name: bookingForm.name.trim(),
+          email: bookingForm.email.trim(),
+          phone: bookingForm.phone.trim(),
+          service: bookingForm.topic,
+          preferredDate: formatApiDate(selectedDate),
+          preferredTime: selectedTime,
+          message: bookingForm.notes.trim(),
+        }),
+      });
 
-    setBookingForm(initialBookingForm);
-    setSelectedDate(null);
-    setSelectedTime("");
-    setView("chat");
+      toast.success("Call request sent", {
+        description: "We will confirm your meeting soon.",
+      });
+
+      setMessages((current) => [
+        ...current,
+        {
+          id: `${Date.now()}-booking`,
+          from: "assistant",
+          text: `Your call request is noted for ${formatDateLabel(selectedDate)} at ${selectedTime}. EmmaTech will confirm by email.`,
+          timestamp: new Date(),
+        },
+      ]);
+
+      setBookingForm(initialBookingForm);
+      setSelectedDate(null);
+      setSelectedTime("");
+      setView("chat");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Request failed");
+    } finally {
+      setIsBookingSubmitting(false);
+    }
   };
 
   const changeMonth = (direction: "previous" | "next") => {
@@ -662,7 +694,7 @@ export default function AIWidgetOnly() {
                       </h3>
                       <p className="text-gray-600 mt-2">
                         Pick a weekday and time. We will confirm the meeting
-                        once the backend is connected.
+                        after reviewing your request.
                       </p>
                     </div>
 
@@ -703,7 +735,7 @@ export default function AIWidgetOnly() {
                         {calendarDays.map((date, index) => {
                           if (!date) return <div key={`empty-${index}`} />;
 
-                          const disabled = isPastDate(date) || isWeekend(date);
+                          const disabled = isPastDate(date);
                           const active =
                             selectedDate !== null &&
                             isSameDate(date, selectedDate);
@@ -714,8 +746,19 @@ export default function AIWidgetOnly() {
                               type="button"
                               disabled={disabled}
                               onClick={() => {
+                                if (isWeekend(date)) {
+                                  setBookingNotice(
+                                    "Weekend bookings are not available. Please choose a weekday.",
+                                  );
+                                  toast.error("Weekend bookings are not available.", {
+                                    description: "Please choose a weekday.",
+                                  });
+                                  return;
+                                }
+
                                 setSelectedDate(date);
                                 setSelectedTime("");
+                                setBookingNotice("");
                               }}
                               className={`h-10 text-sm font-semibold transition-colors ${
                                 active
@@ -733,6 +776,12 @@ export default function AIWidgetOnly() {
                         })}
                       </div>
                     </div>
+
+                    {bookingNotice && (
+                      <div className="border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800">
+                        {bookingNotice}
+                      </div>
+                    )}
 
                     <div>
                       <div className="flex items-center gap-2 text-gray-900 font-semibold mb-3">
@@ -828,9 +877,10 @@ export default function AIWidgetOnly() {
 
                     <button
                       type="submit"
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white px-5 py-4 font-semibold flex items-center justify-center gap-2 transition-colors"
+                      disabled={isBookingSubmitting}
+                      className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:hover:bg-blue-600 text-white px-5 py-4 font-semibold flex items-center justify-center gap-2 transition-colors"
                     >
-                      Request Call
+                      {isBookingSubmitting ? "Sending..." : "Request Call"}
                       <ArrowRight className="h-5 w-5" />
                     </button>
                   </form>

@@ -1,4 +1,4 @@
-import { Navigate, Routes, Route } from "react-router-dom";
+import { Navigate, Routes, Route, useLocation } from "react-router-dom";
 import { Toaster } from "sonner";
 import Header from "./components/Header";
 import SEOManager from "./components/SEOManager";
@@ -33,16 +33,23 @@ import SEOOptimizationPage from "./pages/services/seo";
 import ConsultationPage from "./pages/services/consulting";
 import WatchDemo from "./pages/watchdemo";
 import AIWidgetOnly from "./components/AIWidget";
+import AdminPage from "./pages/admin";
+import AdminLoginPage from "./pages/admin-login";
+import AdminDashboardPage from "./pages/admin-dashboard";
+import AdminResetPasswordPage from "./pages/admin-reset-password";
 
 
 
 
 
 function App() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
   return (
     <div className="bg-white">
       <SEOManager />
-      <Header activeSection="home" />
+      {!isAdminRoute && <Header activeSection="home" />}
       <Routes>
         {/* Default route (/) should go to HomePage */}
         <Route path="/" element={<HomePage />} />
@@ -77,13 +84,18 @@ function App() {
          <Route path="/services/data-intelligence" element={<Navigate to="/service" replace />} />
          <Route path="/services/cybersecurity" element={<Navigate to="/service" replace />} />
          <Route path="/watchdemo" element={<WatchDemo />} />
+         <Route path="/admin" element={<AdminPage />} />
+         <Route path="/admin/login" element={<AdminLoginPage />} />
+         <Route path="/admin/reset-password" element={<AdminResetPasswordPage />} />
+         <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
       </Routes>
        {/* Keep widget fixed */}
-    <AIWidgetOnly />
+    {!isAdminRoute && <AIWidgetOnly />}
     <Toaster
       position="top-right"
       richColors
       closeButton
+      style={{ zIndex: 1000 }}
       toastOptions={{
         duration: 4000,
         classNames: {

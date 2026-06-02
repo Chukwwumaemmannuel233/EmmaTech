@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ChevronDown, Clock, Mail, MapPin, Phone, Send } from "lucide-react";
 import { toast } from "sonner";
+import { apiRequest } from "../lib/api";
 
 const initialFormData = {
   name: "",
@@ -12,6 +13,7 @@ const initialFormData = {
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState(initialFormData);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -22,7 +24,7 @@ const Contact: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const requiredFields = [
@@ -42,11 +44,28 @@ const Contact: React.FC = () => {
       return;
     }
 
-    console.log("Homepage contact submitted:", formData);
-    toast.success("Message sent", {
-      description: "We will get back to you soon.",
-    });
-    setFormData(initialFormData);
+    setIsSubmitting(true);
+
+    try {
+      await apiRequest("/api/contact", {
+        method: "POST",
+        body: JSON.stringify({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          subject: formData.subject.trim(),
+          message: formData.message.trim(),
+        }),
+      });
+
+      toast.success("Message sent", {
+        description: "We will get back to you soon.",
+      });
+      setFormData(initialFormData);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Request failed");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -234,10 +253,11 @@ const Contact: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-blue-600 to-teal-600 text-white px-8 py-4 font-semibold hover:from-blue-700 hover:to-teal-700 transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-105"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-blue-600 to-teal-600 text-white px-8 py-4 font-semibold hover:from-blue-700 hover:to-teal-700 disabled:opacity-60 disabled:hover:from-blue-600 disabled:hover:to-teal-600 transition-all duration-300 flex items-center justify-center space-x-2 transform hover:scale-105 disabled:hover:scale-100"
                 >
                   <Send className="h-5 w-5" />
-                  <span>Send Message</span>
+                  <span>{isSubmitting ? "Sending..." : "Send Message"}</span>
                 </button>
 
                 <p className="text-sm text-gray-600 text-center mt-4">

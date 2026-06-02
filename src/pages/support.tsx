@@ -1,3 +1,5 @@
+import type React from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
@@ -12,6 +14,17 @@ import {
   ShieldCheck,
   Wrench,
 } from "lucide-react";
+import { toast } from "sonner";
+import { apiRequest } from "../lib/api";
+
+const initialSupportForm = {
+  name: "",
+  email: "",
+  category: "",
+  priority: "medium",
+  subject: "",
+  message: "",
+};
 
 const supportTypes = [
   {
@@ -59,6 +72,67 @@ const quickTips = [
 ];
 
 export default function SupportPage() {
+  const [supportForm, setSupportForm] = useState(initialSupportForm);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSupportChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
+    setSupportForm((current) => ({
+      ...current,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const submitSupportRequest = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const requiredFields = [
+      supportForm.name,
+      supportForm.email,
+      supportForm.category,
+      supportForm.subject,
+      supportForm.message,
+    ];
+
+    if (requiredFields.some((field) => !field.trim())) {
+      toast.error("Please fill all required fields.");
+      return;
+    }
+
+    if (!/^\S+@\S+\.\S+$/.test(supportForm.email.trim())) {
+      toast.error("Please enter a valid email.");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      await apiRequest("/api/support", {
+        method: "POST",
+        body: JSON.stringify({
+          name: supportForm.name.trim(),
+          email: supportForm.email.trim(),
+          category: supportForm.category,
+          priority: supportForm.priority,
+          subject: supportForm.subject.trim(),
+          message: supportForm.message.trim(),
+        }),
+      });
+
+      toast.success("Support request sent", {
+        description: "We will review it and respond soon.",
+      });
+      setSupportForm(initialSupportForm);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Request failed");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-white text-gray-900">
       <section className="relative pt-32 pb-20 bg-gray-950 text-white overflow-hidden">
@@ -229,23 +303,91 @@ export default function SupportPage() {
             </div>
           </div>
 
-          <div className="bg-white border border-gray-100 shadow-sm p-8">
-            <Mail className="h-9 w-9 text-blue-600 mb-5" />
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              Need direct help?
-            </h2>
-            <p className="text-gray-600 leading-relaxed mb-6">
-              If you cannot find the answer in the Help Center, contact us and
-              describe the issue clearly. We will respond with the next step.
-            </p>
-            <Link
-              to="/contact"
-              className="inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+          <form
+            onSubmit={submitSupportRequest}
+            className="bg-white border border-gray-100 shadow-sm p-8 space-y-5"
+          >
+            <Mail className="h-9 w-9 text-blue-600" />
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                Send a support request
+              </h2>
+              <p className="text-gray-600 leading-relaxed">
+                Share the issue details and priority so we can route it
+                properly.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <input
+                name="name"
+                value={supportForm.name}
+                onChange={handleSupportChange}
+                placeholder="Full name *"
+                className="w-full border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
+              />
+              <input
+                type="email"
+                name="email"
+                value={supportForm.email}
+                onChange={handleSupportChange}
+                placeholder="Email address *"
+                className="w-full border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <select
+                name="category"
+                value={supportForm.category}
+                onChange={handleSupportChange}
+                className="w-full border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
+              >
+                <option value="">Category *</option>
+                <option value="technical">Technical issue</option>
+                <option value="maintenance">Maintenance request</option>
+                <option value="access">Access and setup</option>
+                <option value="project">Project question</option>
+              </select>
+              <select
+                name="priority"
+                value={supportForm.priority}
+                onChange={handleSupportChange}
+                className="w-full border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
+              >
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+                <option value="urgent">Urgent</option>
+              </select>
+            </div>
+
+            <input
+              name="subject"
+              value={supportForm.subject}
+              onChange={handleSupportChange}
+              placeholder="Subject *"
+              className="w-full border border-gray-300 px-4 py-3 outline-none focus:border-blue-600"
+            />
+
+            <textarea
+              name="message"
+              value={supportForm.message}
+              onChange={handleSupportChange}
+              rows={5}
+              placeholder="Describe what happened, where it happened, and what you expected. *"
+              className="w-full border border-gray-300 px-4 py-3 outline-none focus:border-blue-600 resize-none"
+            />
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
             >
-              Send Support Message
+              {isSubmitting ? "Sending..." : "Send Support Request"}
               <ArrowRight className="h-5 w-5" />
-            </Link>
-          </div>
+            </button>
+          </form>
         </div>
       </section>
     </main>
