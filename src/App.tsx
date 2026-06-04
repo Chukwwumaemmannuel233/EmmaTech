@@ -23,6 +23,7 @@ import TermsOfService from "./pages/terms";
 import CookiesPolicy from "./pages/cookies";
 import ServicesPage from "./pages/service";
 import GetAQuotePage from "./pages/get-a-quote";
+import BookingSuccessPage from "./pages/booking-success";
 import SolutionsPage from "./pages/solutions";
 import SoftwareDevelopmentPage from "./pages/services/software-development";
 // import TalkToEngineerPage from "./pages/talk-to-engineer";
@@ -72,6 +73,7 @@ function App() {
          <Route path="/cookies" element={<CookiesPolicy />} />
          <Route path="/service" element={<ServicesPage />} />
          <Route path="/get-a-quote" element={<GetAQuotePage />} />
+         <Route path="/booking-success" element={<BookingSuccessPage />} />
          <Route path="/solutions" element={<SolutionsPage />} />
          <Route path="/services/software-development" element={<SoftwareDevelopmentPage />} />
          <Route path="/see-how-we-build" element={<SeeHowWeBuildPage />} />
