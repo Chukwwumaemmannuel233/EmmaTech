@@ -5,14 +5,11 @@ import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import {
   ArrowRight,
-  Bot,
   Headphones,
   CalendarDays,
   CheckCircle2,
-  ChevronLeft,
-  ChevronRight,
-  Clock,
   HelpCircle,
+  Loader2,
   Mail,
   MessageCircle,
   Send,
@@ -20,7 +17,7 @@ import {
   UserRound,
   X,
 } from "lucide-react";
-import { apiRequest } from "../lib/api";
+import { apiRequest, checkAiHealth, sendAiMessage } from "../lib/api";
 
 type WidgetView = "home" | "chat" | "schedule";
 
@@ -37,6 +34,15 @@ type BookingForm = {
   phone: string;
   topic: string;
   notes: string;
+};
+
+type BookingResponse = {
+  success: boolean;
+  calendlyBookingUrl?: string;
+  booking?: {
+    id?: string;
+    status?: string;
+  };
 };
 
 const initialBookingForm: BookingForm = {
@@ -62,150 +68,8 @@ const services = [
   "Consulting",
 ];
 
-const timeSlots = ["09:00", "10:30", "12:00", "14:00", "15:30", "17:00"];
-
-const monthNames = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-const dayNames = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-
 const formatTime = (date: Date) =>
   date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-
-const formatDateLabel = (date: Date | null) => {
-  if (!date) return "Select a date";
-  return date.toLocaleDateString([], {
-    weekday: "short",
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-};
-
-const formatApiDate = (date: Date) => {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-};
-
-const isSameDate = (first: Date, second: Date) =>
-  first.getFullYear() === second.getFullYear() &&
-  first.getMonth() === second.getMonth() &&
-  first.getDate() === second.getDate();
-
-const isPastDate = (date: Date) => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const value = new Date(date);
-  value.setHours(0, 0, 0, 0);
-  return value < today;
-};
-
-const isWeekend = (date: Date) => date.getDay() === 0 || date.getDay() === 6;
-
-const buildCalendarDays = (month: Date) => {
-  const year = month.getFullYear();
-  const monthIndex = month.getMonth();
-  const firstDay = new Date(year, monthIndex, 1);
-  const lastDay = new Date(year, monthIndex + 1, 0);
-  const startOffset = (firstDay.getDay() + 6) % 7;
-  const days: Array<Date | null> = [];
-
-  for (let index = 0; index < startOffset; index += 1) {
-    days.push(null);
-  }
-
-  for (let day = 1; day <= lastDay.getDate(); day += 1) {
-    days.push(new Date(year, monthIndex, day));
-  }
-
-  return days;
-};
-
-const getLocalEmmaResponse = (message: string) => {
-  const text = message.toLowerCase();
-
-  if (
-    text.includes("hello") ||
-    text.includes("hi") ||
-    text.includes("hey") ||
-    text.includes("good morning") ||
-    text.includes("good afternoon") ||
-    text.includes("good evening")
-  ) {
-    return "Hello, welcome to EmmaTech. I can help you choose a service, request a quote, ask a support question, or book an intro call.";
-  }
-
-  if (text.includes("quote") || text.includes("price") || text.includes("cost")) {
-    return "You can request a free quote from the quote page. Share your service type, budget range, timeline, and project details so EmmaTech can respond with a clearer next step.";
-  }
-
-  if (
-    text.includes("time") ||
-    text.includes("timeline") ||
-    text.includes("how long") ||
-    text.includes("duration")
-  ) {
-    return "Project timelines depend on scope. A simple website may be faster, while custom software or dashboards need planning, design, development, testing, and launch support.";
-  }
-
-  if (
-    text.includes("contact") ||
-    text.includes("email") ||
-    text.includes("phone") ||
-    text.includes("location")
-  ) {
-    return "You can contact EmmaTech by email at emmatech307@gmail.com, phone at +2348161770490, or through the contact page. We are based around Garriki, Enugu.";
-  }
-
-  if (text.includes("book") || text.includes("call") || text.includes("meeting")) {
-    return "You can book an intro call inside this assistant. Pick a weekday, select a time, and leave your contact details. The form will confirm the request on the frontend for now.";
-  }
-
-  if (text.includes("seo")) {
-    return "EmmaTech offers SEO optimization for service websites: page structure, metadata, technical checks, keyword-focused content, and local search improvements.";
-  }
-
-  if (text.includes("ui") || text.includes("ux") || text.includes("design")) {
-    return "EmmaTech designs clean UI/UX for websites, dashboards, web apps, and digital products so users can understand and use the product more easily.";
-  }
-
-  if (text.includes("it") || text.includes("support") || text.includes("managed")) {
-    return "EmmaTech provides managed IT services, technical support, maintenance, troubleshooting, and practical guidance for business systems.";
-  }
-
-  if (text.includes("software") || text.includes("app") || text.includes("website")) {
-    return "EmmaTech builds custom software, web applications, dashboards, business tools, and websites around your workflow and growth goals.";
-  }
-
-  if (text.includes("service") || text.includes("offer")) {
-    return "EmmaTech currently focuses on Software Development, Managed IT Services, UI/UX Design, SEO Optimization, and Consulting.";
-  }
-
-  if (
-    text.includes("thank") ||
-    text.includes("thanks") ||
-    text.includes("okay") ||
-    text.includes("ok")
-  ) {
-    return "You are welcome. When you are ready, I can guide you to a quote, contact form, or booking request.";
-  }
-
-  return "I can help with EmmaTech services, quotes, booking a call, software projects, UI/UX, SEO, managed IT support, and consulting. Tell me what you want to build or improve.";
-};
 
 export default function AIWidgetOnly() {
   const [isOpen, setIsOpen] = useState(false);
@@ -213,6 +77,8 @@ export default function AIWidgetOnly() {
   const [showNudge, setShowNudge] = useState(false);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [aiAvailable, setAiAvailable] = useState(true);
+  const [aiChecked, setAiChecked] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
@@ -221,24 +87,38 @@ export default function AIWidgetOnly() {
       timestamp: new Date(),
     },
   ]);
-  const [visibleMonth, setVisibleMonth] = useState(new Date());
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedTime, setSelectedTime] = useState("");
   const [bookingForm, setBookingForm] = useState(initialBookingForm);
   const [isBookingSubmitting, setIsBookingSubmitting] = useState(false);
-  const [bookingNotice, setBookingNotice] = useState("");
+  const [calendlyUrl, setCalendlyUrl] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLElement>(null);
   const launcherRef = useRef<HTMLButtonElement>(null);
 
-  const calendarDays = useMemo(
-    () => buildCalendarDays(visibleMonth),
-    [visibleMonth],
-  );
-
   useEffect(() => {
     const timer = window.setTimeout(() => setShowNudge(true), 2500);
     return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+
+    checkAiHealth()
+      .then((health) => {
+        if (!active) return;
+        setAiAvailable(Boolean(health.configured));
+      })
+      .catch(() => {
+        if (!active) return;
+        setAiAvailable(false);
+      })
+      .finally(() => {
+        if (!active) return;
+        setAiChecked(true);
+      });
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -279,9 +159,31 @@ export default function AIWidgetOnly() {
     setShowNudge(false);
   };
 
-  const sendMessage = (value?: string) => {
+  const sendMessage = async (value?: string) => {
     const text = (value || input).trim();
-    if (!text) return;
+    if (!text || isTyping) return;
+
+    if (text.length < 2) {
+      toast.error("Message must be at least 2 characters.");
+      return;
+    }
+
+    if (text.length > 2000) {
+      toast.error("Message must be 2000 characters or less.");
+      return;
+    }
+
+    if (!aiAvailable) {
+      const assistantMessage: Message = {
+        id: `${Date.now()}-assistant-unavailable`,
+        from: "assistant",
+        text: "The AI assistant is unavailable right now. Please try again later.",
+        timestamp: new Date(),
+      };
+
+      setMessages((current) => [...current, assistantMessage]);
+      return;
+    }
 
     const userMessage: Message = {
       id: `${Date.now()}-user`,
@@ -294,17 +196,29 @@ export default function AIWidgetOnly() {
     setInput("");
     setIsTyping(true);
 
-    window.setTimeout(() => {
+    try {
+      const answer = await sendAiMessage(text);
       const assistantMessage: Message = {
         id: `${Date.now()}-assistant`,
         from: "assistant",
-        text: getLocalEmmaResponse(text),
+        text: answer,
         timestamp: new Date(),
       };
 
       setMessages((current) => [...current, assistantMessage]);
+    } catch (error) {
+      const assistantMessage: Message = {
+        id: `${Date.now()}-assistant-error`,
+        from: "assistant",
+        text: "The AI assistant is unavailable right now. Please try again later.",
+        timestamp: new Date(),
+      };
+
+      setMessages((current) => [...current, assistantMessage]);
+      toast.error(error instanceof Error ? error.message : "AI assistant failed");
+    } finally {
       setIsTyping(false);
-    }, 650);
+    }
   };
 
   const handleBookingChange = (
@@ -321,12 +235,6 @@ export default function AIWidgetOnly() {
   const submitBooking = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!selectedDate || !selectedTime) {
-      setBookingNotice("Choose an available weekday date and time.");
-      toast.error("Choose a date and time.");
-      return;
-    }
-
     if (!bookingForm.name.trim() || !bookingForm.email.trim()) {
       toast.error("Name and email are required.");
       return;
@@ -340,21 +248,21 @@ export default function AIWidgetOnly() {
     setIsBookingSubmitting(true);
 
     try {
-      await apiRequest("/api/bookings", {
+      const data = await apiRequest<BookingResponse>("/api/bookings", {
         method: "POST",
         body: JSON.stringify({
           name: bookingForm.name.trim(),
           email: bookingForm.email.trim(),
           phone: bookingForm.phone.trim(),
           service: bookingForm.topic,
-          preferredDate: formatApiDate(selectedDate),
-          preferredTime: selectedTime,
           message: bookingForm.notes.trim(),
         }),
       });
 
       toast.success("Call request sent", {
-        description: "We will confirm your meeting soon.",
+        description: data.calendlyBookingUrl
+          ? "Opening Calendly so you can choose your final call time."
+          : "We will confirm your meeting soon.",
       });
 
       setMessages((current) => [
@@ -362,28 +270,26 @@ export default function AIWidgetOnly() {
         {
           id: `${Date.now()}-booking`,
           from: "assistant",
-          text: `Your call request is noted for ${formatDateLabel(selectedDate)} at ${selectedTime}. EmmaTech will confirm by email.`,
+          text: data.calendlyBookingUrl
+            ? `Your request has been received. Please choose your final call date and time using the Calendly link.`
+            : "Your request has been received. EmmaTech will follow up by email.",
           timestamp: new Date(),
         },
       ]);
 
+      setCalendlyUrl(data.calendlyBookingUrl || "");
       setBookingForm(initialBookingForm);
-      setSelectedDate(null);
-      setSelectedTime("");
-      setView("chat");
+
+      if (data.calendlyBookingUrl) {
+        window.setTimeout(() => {
+          window.location.assign(data.calendlyBookingUrl as string);
+        }, 900);
+      }
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Request failed");
     } finally {
       setIsBookingSubmitting(false);
     }
-  };
-
-  const changeMonth = (direction: "previous" | "next") => {
-    setVisibleMonth((current) => {
-      const next = new Date(current);
-      next.setMonth(current.getMonth() + (direction === "next" ? 1 : -1));
-      return next;
-    });
   };
 
   return (
@@ -571,7 +477,8 @@ export default function AIWidgetOnly() {
                         <CalendarDays className="h-5 w-5 text-blue-600 mb-3" />
                         <h4 className="font-bold text-gray-900">Book a call</h4>
                         <p className="text-sm text-gray-600 mt-1">
-                          Choose a date, time, topic, and contact details.
+                          Share your details, then choose the final slot in
+                          Calendly.
                         </p>
                       </button>
 
@@ -600,8 +507,9 @@ export default function AIWidgetOnly() {
                           <button
                             key={question}
                             type="button"
+                            disabled={!aiChecked || !aiAvailable || isTyping}
                             onClick={() => sendMessage(question)}
-                            className="text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-2"
+                            className="text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 disabled:opacity-50 disabled:hover:bg-blue-50 px-3 py-2"
                           >
                             {question}
                           </button>
@@ -610,6 +518,12 @@ export default function AIWidgetOnly() {
                     </div>
 
                     <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-5 space-y-4 bg-slate-50">
+                      {aiChecked && !aiAvailable && (
+                        <div className="border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800">
+                          AI assistant unavailable. Please try again later.
+                        </div>
+                      )}
+
                       {messages.map((message) => (
                         <div
                           key={message.id}
@@ -669,12 +583,19 @@ export default function AIWidgetOnly() {
                       <input
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
-                        placeholder="Ask Emma..."
-                        className="min-w-0 flex-1 border border-gray-200 px-4 py-3 outline-none focus:border-blue-500"
+                        disabled={!aiChecked || !aiAvailable || isTyping}
+                        placeholder={
+                          aiChecked && !aiAvailable
+                            ? "AI assistant unavailable"
+                            : "Ask Emma..."
+                        }
+                        className="min-w-0 flex-1 border border-gray-200 px-4 py-3 outline-none focus:border-blue-500 disabled:bg-gray-50 disabled:text-gray-400"
                       />
                       <button
                         type="submit"
-                        disabled={!input.trim()}
+                        disabled={
+                          !input.trim() || !aiChecked || !aiAvailable || isTyping
+                        }
                         className="w-12 h-12 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:hover:bg-blue-600 text-white flex items-center justify-center"
                       >
                         <Send className="h-5 w-5" />
@@ -685,126 +606,49 @@ export default function AIWidgetOnly() {
 
                 {view === "schedule" && (
                   <form onSubmit={submitBooking} className="p-5 space-y-6">
-                    <div>
-                      <span className="text-blue-600 font-semibold text-sm uppercase tracking-wide">
-                        Book a Call
-                      </span>
-                      <h3 className="text-2xl font-bold text-gray-900 mt-2">
-                        Request an intro meeting
-                      </h3>
-                      <p className="text-gray-600 mt-2">
-                        Pick a weekday and time. We will confirm the meeting
-                        after reviewing your request.
-                      </p>
-                    </div>
-
-                    <div className="border border-gray-100 p-4">
-                      <div className="flex items-center justify-between mb-4">
-                        <button
-                          type="button"
-                          onClick={() => changeMonth("previous")}
-                          className="w-9 h-9 border border-gray-200 flex items-center justify-center"
-                        >
-                          <ChevronLeft className="h-4 w-4" />
-                        </button>
-                        <h4 className="font-bold text-gray-900">
-                          {monthNames[visibleMonth.getMonth()]}{" "}
-                          {visibleMonth.getFullYear()}
-                        </h4>
-                        <button
-                          type="button"
-                          onClick={() => changeMonth("next")}
-                          className="w-9 h-9 border border-gray-200 flex items-center justify-center"
-                        >
-                          <ChevronRight className="h-4 w-4" />
-                        </button>
-                      </div>
-
-                      <div className="grid grid-cols-7 gap-1 text-center mb-2">
-                        {dayNames.map((day) => (
-                          <div
-                            key={day}
-                            className="text-[11px] font-semibold text-gray-500 py-2"
+                    {calendlyUrl && (
+                      <div className="border border-emerald-200 bg-emerald-50 p-4">
+                        <CheckCircle2 className="h-6 w-6 text-emerald-600 mb-3" />
+                        <h3 className="font-bold text-emerald-950">
+                          Your booking request has been received.
+                        </h3>
+                        <p className="text-sm text-emerald-800 mt-2 leading-relaxed">
+                          Please choose your final call time using the link
+                          below.
+                        </p>
+                        <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+                          <a
+                            href={calendlyUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-3 text-sm font-semibold transition-colors"
                           >
-                            {day}
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="grid grid-cols-7 gap-1">
-                        {calendarDays.map((date, index) => {
-                          if (!date) return <div key={`empty-${index}`} />;
-
-                          const disabled = isPastDate(date);
-                          const active =
-                            selectedDate !== null &&
-                            isSameDate(date, selectedDate);
-
-                          return (
-                            <button
-                              key={date.toISOString()}
-                              type="button"
-                              disabled={disabled}
-                              onClick={() => {
-                                if (isWeekend(date)) {
-                                  setBookingNotice(
-                                    "Weekend bookings are not available. Please choose a weekday.",
-                                  );
-                                  toast.error("Weekend bookings are not available.", {
-                                    description: "Please choose a weekday.",
-                                  });
-                                  return;
-                                }
-
-                                setSelectedDate(date);
-                                setSelectedTime("");
-                                setBookingNotice("");
-                              }}
-                              className={`h-10 text-sm font-semibold transition-colors ${
-                                active
-                                  ? "bg-blue-600 text-white"
-                                  : "bg-gray-50 text-gray-800 hover:bg-blue-50"
-                              } ${
-                                disabled
-                                  ? "opacity-35 cursor-not-allowed hover:bg-gray-50"
-                                  : ""
-                              }`}
-                            >
-                              {date.getDate()}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {bookingNotice && (
-                      <div className="border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-semibold text-amber-800">
-                        {bookingNotice}
+                            Choose Call Time
+                            <ArrowRight className="h-4 w-4" />
+                          </a>
+                          <button
+                            type="button"
+                            onClick={() => setCalendlyUrl("")}
+                            className="inline-flex items-center justify-center border border-emerald-200 bg-white px-4 py-3 text-sm font-semibold text-emerald-800 hover:border-emerald-400"
+                          >
+                            Start Another Request
+                          </button>
+                        </div>
                       </div>
                     )}
 
                     <div>
-                      <div className="flex items-center gap-2 text-gray-900 font-semibold mb-3">
-                        <Clock className="h-4 w-4 text-blue-600" />
-                        {formatDateLabel(selectedDate)}
-                      </div>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                        {timeSlots.map((time) => (
-                          <button
-                            key={time}
-                            type="button"
-                            disabled={!selectedDate}
-                            onClick={() => setSelectedTime(time)}
-                            className={`px-3 py-2 border text-sm font-semibold transition-colors ${
-                              selectedTime === time
-                                ? "bg-blue-600 border-blue-600 text-white"
-                                : "border-gray-200 text-gray-700 hover:border-blue-300"
-                            } disabled:opacity-40 disabled:hover:border-gray-200`}
-                          >
-                            {time}
-                          </button>
-                        ))}
-                      </div>
+                      <span className="text-blue-600 font-semibold text-sm uppercase tracking-wide">
+                        Step 1
+                      </span>
+                      <h3 className="text-2xl font-bold text-gray-900 mt-2">
+                        Tell us about your request
+                      </h3>
+                      <p className="text-gray-600 mt-2">
+                        Send your basic details first. Calendly will handle the
+                        final date, time, calendar invite, meeting link,
+                        reminders, and rescheduling.
+                      </p>
                     </div>
 
                     <div className="grid grid-cols-1 gap-4">
@@ -878,10 +722,19 @@ export default function AIWidgetOnly() {
                     <button
                       type="submit"
                       disabled={isBookingSubmitting}
-                      className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-60 disabled:hover:bg-blue-600 text-white px-5 py-4 font-semibold flex items-center justify-center gap-2 transition-colors"
+                      className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-blue-500 text-white px-5 py-4 font-semibold flex items-center justify-center gap-2 transition-colors shadow-lg shadow-blue-600/15 disabled:cursor-wait"
                     >
-                      {isBookingSubmitting ? "Sending..." : "Request Call"}
-                      <ArrowRight className="h-5 w-5" />
+                      {isBookingSubmitting ? (
+                        <>
+                          <Loader2 className="h-5 w-5 animate-spin" />
+                          Saving request...
+                        </>
+                      ) : (
+                        <>
+                          Submit Request
+                          <ArrowRight className="h-5 w-5" />
+                        </>
+                      )}
                     </button>
                   </form>
                 )}

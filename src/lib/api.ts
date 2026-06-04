@@ -38,3 +38,27 @@ export async function apiRequest<T = unknown>(
 
   return data as T;
 }
+
+type AiHealthResponse = {
+  success: boolean;
+  configured: boolean;
+  model?: string;
+};
+
+type AiChatResponse = {
+  success: boolean;
+  answer: string;
+};
+
+export async function checkAiHealth() {
+  return apiRequest<AiHealthResponse>("/api/ai/health");
+}
+
+export async function sendAiMessage(message: string) {
+  const data = await apiRequest<AiChatResponse>("/api/ai/chat", {
+    method: "POST",
+    body: JSON.stringify({ message }),
+  });
+
+  return data.answer;
+}
