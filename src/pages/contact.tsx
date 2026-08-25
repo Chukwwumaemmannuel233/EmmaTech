@@ -80,15 +80,15 @@ const ContactPage: React.FC = () => {
     {
       icon: Mail,
       title: "Email",
-      details: "emmatech307@gmail.com",
-      href: "mailto:emmatech307@gmail.com",
+      details: "example@gmail.com",
+      href: "mailto:example@gmail.com",
       subtitle: "Send us a message anytime",
     },
     {
       icon: Phone,
       title: "Phone",
-      details: "+2348161770490",
-      href: "tel:+2348161770490",
+      details: "+80XXXXXXXX",
+      href: "tel:+80XXXXXXXX",
       subtitle: "Call during business hours",
     },
     {

@@ -16,7 +16,7 @@ const Contact: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     setFormData((currentFormData) => ({
       ...currentFormData,
@@ -74,10 +74,10 @@ const Contact: React.FC = () => {
       title: "Email Us",
       details: (
         <a
-          href="mailto:emmatech307@gmail.com"
+          href="mailto:example@gmail.com"
           className="text-gray-800 hover:text-blue-600 transition-colors duration-200"
         >
-          emmatech307@gmail.com
+          example@gmail.com
         </a>
       ),
       subtitle: "Send us an email anytime",
@@ -87,10 +87,10 @@ const Contact: React.FC = () => {
       title: "Call Us",
       details: (
         <a
-          href="tel:+2348161770490"
+          href="tel:+80XXXXXXXX"
           className="text-gray-800 hover:text-blue-600 transition-colors duration-200"
         >
-          +2348161770490
+          +80XXXXXXXX
         </a>
       ),
       subtitle: "Mon-Fri from 8am to 6pm",
@@ -100,15 +100,15 @@ const Contact: React.FC = () => {
       title: "Visit Us",
       details: (
         <a
-          href="https://www.google.com/maps/place/15+Umuogbodoene+Street,+Garriki,+Enugu,+Nigeria+400107"
+          href="https://www.google.com/maps/search/?api=1&query=Victoria+Island+Lagos+Nigeria"
           target="_blank"
           rel="noopener noreferrer"
           className="text-gray-800 hover:text-blue-600 transition-colors duration-200"
         >
-          15 Umuogbodoene Street, Garriki, Enugu, Nigeria 400107
+          Victoria Island, Lagos, Nigeria
         </a>
       ),
-      subtitle: "Our main office location",
+      subtitle: "Serving clients locally and remotely",
     },
     {
       icon: Clock,
@@ -140,9 +140,7 @@ const Contact: React.FC = () => {
     <section id="contact" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Let's Talk
-          </h2>
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">Let's Talk</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             Have a question, idea, or support need? Send us a message and we
             will help you find the right next step.
@@ -179,7 +177,7 @@ const Contact: React.FC = () => {
             <div className="mt-8 h-64 overflow-hidden border border-gray-100 shadow-lg">
               <iframe
                 title="EmmaTech location map"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.04836858819!2d7.498221273608025!3d6.387760024728755!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1044a170e4da3431%3A0x1b70056539bd4961!2sBest%20one%20gas%20station!5e0!3m2!1sen!2sng!4v1756287268030!5m2!1sen!2sng"
+                src="https://www.google.com/maps?q=Victoria+Island,+Lagos,+Nigeria&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -326,7 +324,9 @@ type FormFieldProps = {
   id: string;
   name: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
   placeholder: string;
   type?: string;
 };
@@ -341,7 +341,10 @@ const FormField = ({
   type = "text",
 }: FormFieldProps) => (
   <div>
-    <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-2">
+    <label
+      htmlFor={id}
+      className="block text-sm font-medium text-gray-700 mb-2"
+    >
       {label}
     </label>
     <input

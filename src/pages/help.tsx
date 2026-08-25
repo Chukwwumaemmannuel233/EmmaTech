@@ -86,7 +86,7 @@ const helpTopics = [
       },
       {
         q: "Where should I send support questions?",
-        a: "Use the contact page or email emmatech307@gmail.com with a clear description of the issue.",
+        a: "Use the contact page or email example@gmail.com with a clear description of the issue.",
       },
     ],
   },

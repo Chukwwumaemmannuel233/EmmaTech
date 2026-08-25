@@ -93,13 +93,13 @@ const Footer: React.FC = () => {
   const contactLinks = [
     {
       icon: Mail,
-      href: "mailto:emmatech307@gmail.com",
-      text: "emmatech307@gmail.com",
+      href: "mailto:example@gmail.com",
+      text: "example@gmail.com",
     },
     {
       icon: Phone,
-      href: "tel:+2348161770490",
-      text: "+2348161770490",
+      href: "+80XXXXXXXX",
+      text: "+80XXXXXXXX",
     },
     {
       icon: MapPin,

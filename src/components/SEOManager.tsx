@@ -186,8 +186,8 @@ const getServiceSchema = (pathname: string, seo: PageSeo) => {
       "@type": "LocalBusiness",
       name: "EmmaTech",
       url: siteUrl,
-      email: "emmatech307@gmail.com",
-      telephone: "+2348161770490",
+      email: "example@gmail.com",
+      telephone: "+80XXXXXXXX",
       address: {
         "@type": "PostalAddress",
         addressLocality: "Enugu",
@@ -272,8 +272,8 @@ const SEOManager = () => {
       name: "EmmaTech",
       url: siteUrl,
       logo: defaultImage,
-      email: "emmatech307@gmail.com",
-      telephone: "+2348161770490",
+      email: "example@gmail.com",
+      telephone: "+80XXXXXXXX",
       address: {
         "@type": "PostalAddress",
         streetAddress: "15 Umuogbodoene Street, Garriki",

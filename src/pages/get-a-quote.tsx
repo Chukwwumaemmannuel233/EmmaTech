@@ -168,11 +168,11 @@ const GetAQuotePage: React.FC = () => {
               <div className="border-t border-gray-100 mt-6 pt-6 space-y-3 text-sm text-gray-600">
                 <p className="flex items-center gap-2">
                   <Mail className="h-4 w-4 text-blue-600" />
-                  emmatech307@gmail.com
+                  example@gmail.com
                 </p>
                 <p className="flex items-center gap-2">
                   <Phone className="h-4 w-4 text-blue-600" />
-                  +2348161770490
+                  +80XXXXXXXX
                 </p>
               </div>
             </div>

@@ -317,7 +317,7 @@ export default function DocumentationPage() {
           </motion.div>
           <motion.div whileHover={{ scale: 1.03 }} className="bg-white p-6 rounded-xl shadow-md">
             <h4 className="font-semibold mb-2">Phone</h4>
-            <p className="text-gray-600">+234 801 234 5678</p>
+            <p className="text-gray-600+80XXXXXXXX</p>
           </motion.div>
           <motion.div whileHover={{ scale: 1.03 }} className="bg-white p-6 rounded-xl shadow-md">
             <h4 className="font-semibold mb-2">Office</h4>
