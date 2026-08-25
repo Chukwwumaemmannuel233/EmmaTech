@@ -43,7 +43,7 @@ const members = [
     role: "Software Developer",
     specialty: "Web apps, APIs, and dashboards",
     image:
-      "https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "",
     bio: "Builds web applications, dashboards, APIs, and practical business tools.",
     linkedin: "#",
     twitter: "#",
@@ -53,7 +53,7 @@ const members = [
     role: "UI/UX Designer",
     specialty: "Product flows and interface systems",
     image:
-      "https://images.pexels.com/photos/3756679/pexels-photo-3756679.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "",
     bio: "Designs clear user journeys, interfaces, wireframes, and product screens.",
     linkedin: "#",
     twitter: "#",
@@ -63,7 +63,7 @@ const members = [
     role: "IT Support Specialist",
     specialty: "Device setup and system support",
     image:
-      "https://images.pexels.com/photos/1181352/pexels-photo-1181352.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "",
     bio: "Supports devices, systems, apps, and day-to-day technical operations.",
     linkedin: "#",
     twitter: "#",
@@ -73,7 +73,7 @@ const members = [
     role: "SEO Specialist",
     specialty: "Technical SEO and content structure",
     image:
-      "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=900",
+      "",
     bio: "Improves website structure, visibility, page quality, and search readiness.",
     linkedin: "#",
     twitter: "#",

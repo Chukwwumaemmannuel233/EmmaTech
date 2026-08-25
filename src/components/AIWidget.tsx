@@ -1,5 +1,5 @@
 import type React from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
@@ -313,7 +313,7 @@ export default function AIWidgetOnly() {
             <div className="flex gap-3">
               <div className="relative w-11 h-11 rounded-full overflow-hidden flex-shrink-0">
                 <img
-                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=160&q=80"
+                  src="/images/ceo.jpeg"
                   alt="Emma AI support"
                   className="w-full h-full object-cover rounded-full"
                 />
@@ -345,7 +345,7 @@ export default function AIWidgetOnly() {
       >
         <span className="relative block w-full h-full rounded-full overflow-hidden">
           <img
-            src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=160&q=80"
+            src="/images/ceo.jpeg"
             alt="Emma AI support"
             className="w-full h-full object-cover rounded-full"
           />
@@ -386,7 +386,7 @@ export default function AIWidgetOnly() {
                 <div className="flex items-center gap-3">
                   <div className="relative w-11 h-11 rounded-full overflow-hidden flex-shrink-0">
                     <img
-                      src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=160&q=80"
+                      src="/images/ceo.jpeg"
                       alt="Emma AI support"
                       className="w-full h-full object-cover rounded-full"
                     />
